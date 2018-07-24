@@ -4,12 +4,12 @@
     <!-- rectangle表示为矩形 -->
 
     <!-- 填充的颜色 -->
-    <solid android:color="#cead78" />
+    <solid android:color="@color/colorGlod" />
 
     <!-- 边框的颜色和粗细 -->
     <stroke
         android:width="1dp"
-        android:color="#cead78"
+        android:color="@color/colorGlod"
         />
 
     <!-- android:radius 圆角的半径 -->

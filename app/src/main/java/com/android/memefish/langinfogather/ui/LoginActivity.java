@@ -37,5 +37,8 @@ public class LoginActivity extends BaseActivity<LoginPresenter> {
     }
 
 
-
+    @Override
+    public void onBackPressed() {
+        //退出应用
+    }
 }
