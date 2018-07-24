@@ -1,5 +1,4 @@
 apply plugin: 'com.android.application'
-//apply plugin: 'com.jakewharton.butterknife'
 android {
     compileSdkVersion 28
     defaultConfig {
@@ -31,6 +30,4 @@ dependencies {
     implementation 'com.github.huangshunbo:reloadtipview:1.0.0'
     implementation 'com.github.huangshunbo:smartdialog:1.0.0'
 
-    implementation 'com.jakewharton:butterknife:8.4.0'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
 }

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="?attr/actionBarSize"
+    android:background="@color/colorPrimary">
+
+    <TextView
+        android:id="@+id/view_main_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:textColor="@color/color_white"
+        android:textSize="20dp"
+        tools:text="Hello" />
+
+
+
+    <LinearLayout
+        android:id="@+id/view_main_search_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:orientation="horizontal"
+        android:layout_toLeftOf="@id/view_main_center"
+        android:layout_toRightOf="@id/view_main_title">
+        <EditText
+            android:id="@+id/view_main_search_content_et"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="please"
+            />
+        <ImageView
+            android:id="@+id/view_main_search_content_clear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_backspace_black_24dp"/>
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/view_main_center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="10dp"
+        android:src="@drawable/ic_assignment_ind_black_24dp" />
+
+    <ImageView
+        android:id="@+id/view_main_search"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_search_black_24dp"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@id/view_main_center"/>
+</RelativeLayout>
