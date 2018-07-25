@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/activity_region_select_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:title="添加新的行政区"
+        app:titleTextColor="@color/color_white"
+        android:background="@color/colorPrimary"
+        app:navigationIcon="@drawable/ic_chevron_left_black_24dp"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="20dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="省    份"
+            android:textColor="@color/color_black"
+            android:textSize="22dp"/>
+        <TextView
+            android:id="@+id/activity_region_select_province"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginLeft="40dp"
+            tools:text="广东省"
+            android:textColor="@color/color_black"
+            android:textSize="22dp"
+            />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_arrow_drop_down_black_24dp"/>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2px"
+        android:background="@color/golor_gray2"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"/>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="20dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="地    市"
+            android:textColor="@color/color_black"
+            android:textSize="22dp"/>
+        <TextView
+            android:id="@+id/activity_region_select_city"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginLeft="40dp"
+            tools:text="深圳市"
+            android:textColor="@color/color_black"
+            android:textSize="22dp"
+            />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_arrow_drop_down_black_24dp"/>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2px"
+        android:background="@color/golor_gray2"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="20dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="区    县"
+            android:textColor="@color/color_black"
+            android:textSize="22dp"/>
+        <TextView
+            android:id="@+id/activity_region_select_area"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginLeft="40dp"
+            tools:text="宝安区"
+            android:textColor="@color/color_black"
+            android:textSize="22dp"
+            />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_arrow_drop_down_black_24dp"/>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2px"
+        android:background="@color/golor_gray2"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"/>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="20dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="地籍区"
+            android:textColor="@color/color_black"
+            android:textSize="22dp"/>
+        <EditText
+            android:id="@+id/activity_region_select_addr"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:layout_marginLeft="20dp"
+            android:inputType="number"/>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2px"
+        android:background="@color/golor_gray2"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="20dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="地籍子区"
+            android:textColor="@color/color_black"
+            android:textSize="22dp"/>
+        <EditText
+            android:id="@+id/activity_region_select_addr_detail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:layout_marginLeft="20dp"
+            android:inputType="number"/>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2px"
+        android:background="@color/golor_gray2"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"/>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="20dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="村    名"
+            android:textColor="@color/color_black"
+            android:textSize="22dp"/>
+        <EditText
+            android:id="@+id/activity_region_select_et_village"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:layout_marginLeft="20dp"/>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2px"
+        android:background="@color/golor_gray2"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"/>
+
+    <TextView
+        android:id="@+id/activity_region_select_submit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="确    定"
+        android:textColor="@color/color_white"
+        android:textSize="18dp"
+        android:gravity="center"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="20dp"
+        android:padding="10dp"
+        android:background="@drawable/button_corners_gold"/>
+</LinearLayout>

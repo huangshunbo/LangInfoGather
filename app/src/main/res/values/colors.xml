@@ -7,4 +7,8 @@
     <color name="colorGlod">#cead78</color>
     <color name="colorGlodDark">#FF977D53</color>
     <color name="alphaWhite">#70FFFFFF</color>
+
+    <color name="color_black">#333333</color>
+    <color name="color_gray">#999999</color>
+    <color name="golor_gray2">#e5e5e5</color>
 </resources>

@@ -36,21 +36,21 @@ public class FaceOrc {
     public static void send(File file){
         //https://api-cn.faceplusplus.com/cardpp/v1/ocridcard
         HashMap<String,String> params = new HashMap<>();
-        params.put("api_key",API_KEY);
-        params.put("api_secret",SECRET_KEY);
+//        params.put("api_key",API_KEY);
+//        params.put("api_secret",SECRET_KEY);
         params.put("image_base64",base64ForBitmap(BitmapFactory.decodeFile(file.getAbsolutePath())));
 
-//        Smart.post("ocridcard", params, new StringCallback() {
-//            @Override
-//            public void onSuccess(Object o) {
-//                Log.d("hsb","result " + o.toString());
-//            }
-//
-//            @Override
-//            public void onFailure(ApiException e) {
-//                Log.d("hsb","result "+e.getMessage());
-//            }
-//        });
+        Smart.post("ocridcard", params, new StringCallback() {
+            @Override
+            public void onSuccess(Object o) {
+                Log.d("hsb","result " + o.toString());
+            }
+
+            @Override
+            public void onFailure(ApiException e) {
+                Log.d("hsb","result "+e.getMessage());
+            }
+        });
     }
 
     private static String base64ForBitmap(Bitmap bitmap){

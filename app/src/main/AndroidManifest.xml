@@ -27,8 +27,10 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.MainActivity" android:launchMode="standard"/>
+        <activity android:name=".ui.main.RegionMainActivity" android:launchMode="singleTask"/>
+        <activity android:name=".ui.main.ObligeeMainActivity" android:launchMode="singleTask"/>
         <activity android:name=".ui.UserCenterActivity" android:launchMode="singleTask"/>
+        <activity android:name=".ui.main.RegionSelectActivity"  android:launchMode="singleTask"/>
     </application>
 
 </manifest>

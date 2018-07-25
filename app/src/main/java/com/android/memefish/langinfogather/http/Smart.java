@@ -1,7 +1,6 @@
 package com.android.memefish.langinfogather.http;
 
 import com.android.memefish.langinfogather.BaseApplication;
-import com.android.memefish.langinfogather.ui.MainActivity;
 import com.android.minlib.smarthttp.callback.AbstractCallBack;
 import com.android.minlib.smarthttp.okhttp.SmartHttp;
 import com.android.minlib.smarthttp.strategy.IURLStrategy;
@@ -24,8 +23,6 @@ public class Smart {
             @Override
             public String getDomains() {
                 return "api-cn.faceplusplus.com/cardpp/v1/";
-//                return "imtt.dd.qq.com/16891/5F46E5DD09F7478B7C1B96EEA48CA221.apk";
-//                return "imtt.dd.qq.com/16891/77FCEF50B7D08DC3322DDC2F1DF54BAF.apk";
             }
 
         });

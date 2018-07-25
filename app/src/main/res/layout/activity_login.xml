@@ -64,8 +64,7 @@
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:padding="10dp"
-            android:background="@drawable/button_corners_gold"
-            android:onClick="onClick"/>
+            android:background="@drawable/button_corners_gold"/>
     </LinearLayout>
 
 </RelativeLayout>

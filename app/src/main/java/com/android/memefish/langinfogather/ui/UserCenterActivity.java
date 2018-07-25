@@ -9,6 +9,8 @@ import android.widget.TextView;
 import com.android.memefish.langinfogather.R;
 import com.android.memefish.langinfogather.mvp.BasePresenter;
 import com.android.memefish.langinfogather.mvp.base.BaseActivity;
+import com.android.memefish.langinfogather.ui.main.MainBaseActivity;
+import com.android.memefish.langinfogather.ui.main.RegionMainActivity;
 
 public class UserCenterActivity extends BaseActivity implements View.OnClickListener{
 
@@ -39,7 +41,7 @@ public class UserCenterActivity extends BaseActivity implements View.OnClickList
     public void onClick(View view) {
         int id = view.getId();
         if(id == R.id.activity_user_changearea){
-            startActivity(new Intent(this,MainActivity.class));
+            startActivity(new Intent(this,RegionMainActivity.class));
         }else if(id == R.id.activity_user_changepwd){
 
         }else if(id == R.id.activity_user_logout){
