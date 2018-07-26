@@ -3,8 +3,10 @@ package com.android.memefish.langinfogather.ui;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.media.FaceDetector;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.ActivityCompat;
@@ -13,11 +15,15 @@ import android.widget.TextView;
 
 import com.android.memefish.langinfogather.R;
 import com.android.memefish.langinfogather.mvp.base.BaseActivity;
+import com.android.memefish.langinfogather.ocr.baidu.BaiduOrc;
+import com.android.memefish.langinfogather.ocr.face.FaceOrc;
 import com.android.memefish.langinfogather.presenter.LoginPresenter;
 import com.android.memefish.langinfogather.ui.main.MainBaseActivity;
 import com.android.memefish.langinfogather.ui.main.ObligeeMainActivity;
 
-public class LoginActivity extends BaseActivity<LoginPresenter> implements View.OnClickListener{
+import java.io.File;
+
+public class LoginActivity extends BaseActivity<LoginPresenter> implements View.OnClickListener {
 
     TextInputEditText etPhone;
     TextInputEditText etPassword;
@@ -40,20 +46,31 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements View.
         permission();
     }
 
-    private void permission(){
+    private void permission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if(checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)!= PackageManager.PERMISSION_GRANTED){
-                ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},999);
+            if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 999);
             }
         }
     }
 
     @Override
-    public void onClick(View view){
+    public void onClick(View view) {
         int id = view.getId();
-        if(id == R.id.activity_login_submit){
-            startActivity(new Intent(this,ObligeeMainActivity.class));
-            finish();
+        if (id == R.id.activity_login_submit) {
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        FaceOrc.send(new File(Environment.getExternalStorageDirectory() + "/idcard.jpg"));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }).start();
+
+//            startActivity(new Intent(this,ObligeeMainActivity.class));
+//            finish();
         }
     }
 

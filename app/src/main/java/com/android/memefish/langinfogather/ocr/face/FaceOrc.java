@@ -16,6 +16,8 @@ import com.baidu.ocr.sdk.exception.OCRError;
 import com.baidu.ocr.sdk.model.IDCardResult;
 import com.baidu.ocr.sdk.utils.HttpUtil;
 
+import org.json.JSONObject;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
@@ -32,25 +34,21 @@ import java.util.HashMap;
 public class FaceOrc {
     public static final String API_KEY = "e_gkao_4z59UJ_ELCPfZJf2ThBD1NBdT";
     public static final String SECRET_KEY = "ZPGIraKKqnf-qlmnP_3XVIj1ygW1jIVS";
+    private static final String URL = "https://api-cn.faceplusplus.com/cardpp/v1/ocridcard";
 
-    public static void send(File file){
-        //https://api-cn.faceplusplus.com/cardpp/v1/ocridcard
-        HashMap<String,String> params = new HashMap<>();
-//        params.put("api_key",API_KEY);
-//        params.put("api_secret",SECRET_KEY);
-        params.put("image_base64",base64ForBitmap(BitmapFactory.decodeFile(file.getAbsolutePath())));
+    public static void send(File file) throws Exception {
+//        HashMap<String,String> params = new HashMap<>();
+//        params.put("image_base64",base64ForBitmap(BitmapFactory.decodeFile(file.getAbsolutePath())));
+//
+//        Smart.post(base64ForBitmap(BitmapFactory.decodeFile(file.getAbsolutePath())));
 
-        Smart.post("ocridcard", params, new StringCallback() {
-            @Override
-            public void onSuccess(Object o) {
-                Log.d("hsb","result " + o.toString());
-            }
-
-            @Override
-            public void onFailure(ApiException e) {
-                Log.d("hsb","result "+e.getMessage());
-            }
-        });
+        //获取正面身份证验证信息
+        HashMap<String, String> faceMap = new HashMap<String, String>();
+        faceMap.put("api_key", API_KEY);
+        faceMap.put("api_secret", SECRET_KEY);
+        faceMap.put("image_base64", base64ForBitmap(BitmapFactory.decodeFile(file.getAbsolutePath())));
+        String frontResult = new String(FaceIdentity.post(URL, faceMap), "UTF-8");
+        Log.d("hsb","result : "+frontResult);
     }
 
     private static String base64ForBitmap(Bitmap bitmap){
