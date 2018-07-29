@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2px"
+            android:background="@color/color_gray"
+            android:layout_centerVertical="true"/>
+        <TextView
+            android:id="@+id/item_obligee_type_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="黄顺波"
+            android:layout_centerInParent="true"
+            android:background="@color/color_white"
+            android:textSize="18dp"
+            android:textColor="@color/color_black"
+            android:padding="10dp"/>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/item_obligee_type_obligee"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawableTop="@mipmap/ic_item_obligee"
+            android:drawablePadding="10dp"
+            android:layout_margin="10dp"
+            android:gravity="center_horizontal"
+            android:text="身份证"
+            />
+        <TextView
+            android:id="@+id/item_obligee_type_booklet"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawableTop="@mipmap/ic_item_booklet"
+            android:drawablePadding="10dp"
+            android:layout_margin="10dp"
+            android:gravity="center_horizontal"
+            android:text="户口簿"
+            />
+    </LinearLayout>
+</LinearLayout>
