@@ -26,12 +26,10 @@ public class BaseApplication extends Application {
             public void onResult(AccessToken result) {
                 // 调用成功，返回AccessToken对象
                 token = result.getAccessToken();
-                Log.d("hsb","token " + token);
             }
             @Override
             public void onError(OCRError error) {
                 // 调用失败，返回OCRError子类SDKError对象
-                Log.d("hsb","token " + error.getMessage());
             }
         }, getApplicationContext(), BaiduOrc.API_KEY,BaiduOrc.SECRET_KEY);
 

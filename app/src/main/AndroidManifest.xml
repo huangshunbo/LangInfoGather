@@ -31,6 +31,24 @@
         <activity android:name=".ui.main.ObligeeMainActivity" android:launchMode="singleTask"/>
         <activity android:name=".ui.UserCenterActivity" android:launchMode="singleTask"/>
         <activity android:name=".ui.main.RegionSelectActivity"  android:launchMode="singleTask"/>
+        <activity android:name=".ui.main.ObligeeSelectActivity" android:launchMode="singleTask" />
+        <activity android:name=".ui.gather.GatherTypeActivity" android:launchMode="singleTask" />
+        <activity android:name=".ui.gather.SourceTypeActivity" android:launchMode="singleTask" />
+        <activity android:name=".ui.gather.ObligeeTypeActivity" android:launchMode="singleTask" />
+        <activity android:name=".ui.gather.QuestionNaireActivity" android:launchMode="singleTask" />
+        <activity android:name=".ui.gather.PictureDirActivity" android:launchMode="singleTask" />
+        <activity android:name=".ui.gather.PictureFileActivity" android:launchMode="singleTask" />
+
+
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.android.memefish.langinfogather"
+            android:exported="false"
+            android:grantUriPermissions="true">
+        <meta-data
+            android:name="android.support.FILE_PROVIDER_PATHS"
+            android:resource="@xml/file_paths" />
+        </provider>
     </application>
 
 </manifest>

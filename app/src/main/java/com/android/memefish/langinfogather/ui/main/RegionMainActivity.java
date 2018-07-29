@@ -35,7 +35,6 @@ public class RegionMainActivity extends MainBaseActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == REGION_SELECT_CODE && resultCode == RESULT_OK){
             ProvinceBean bean = (ProvinceBean) data.getSerializableExtra("province");
-            Log.d("hsb","result " + bean.toString());
         }
     }
 
@@ -54,7 +53,7 @@ public class RegionMainActivity extends MainBaseActivity {
                     list.add(new RegionBean("E村","2018-07-25 23:50"));
                     mSmartRecyclerView.showData(taskId,list,20);
                 }
-            },2000);
+            },200);
         }
 
         @Override

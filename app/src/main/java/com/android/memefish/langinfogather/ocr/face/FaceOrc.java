@@ -2,21 +2,7 @@ package com.android.memefish.langinfogather.ocr.face;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Rect;
 import android.util.Base64;
-import android.util.Log;
-
-import com.android.memefish.langinfogather.http.Smart;
-import com.android.minlib.smarthttp.callback.StringCallback;
-import com.android.minlib.smarthttp.exception.ApiException;
-import com.android.minlib.smarthttp.okhttp.SmartHttp;
-import com.baidu.ocr.sdk.OCR;
-import com.baidu.ocr.sdk.OnResultListener;
-import com.baidu.ocr.sdk.exception.OCRError;
-import com.baidu.ocr.sdk.model.IDCardResult;
-import com.baidu.ocr.sdk.utils.HttpUtil;
-
-import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -48,7 +34,6 @@ public class FaceOrc {
         faceMap.put("api_secret", SECRET_KEY);
         faceMap.put("image_base64", base64ForBitmap(BitmapFactory.decodeFile(file.getAbsolutePath())));
         String frontResult = new String(FaceIdentity.post(URL, faceMap), "UTF-8");
-        Log.d("hsb","result : "+frontResult);
     }
 
     private static String base64ForBitmap(Bitmap bitmap){

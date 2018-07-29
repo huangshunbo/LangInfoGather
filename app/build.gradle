@@ -1,4 +1,12 @@
 apply plugin: 'com.android.application'
+apply plugin: 'org.greenrobot.greendao'
+
+greendao {
+    schemaVersion 1 //数据库版本号
+    daoPackage 'com.android.memefish.langinfogather.db'// 设置DaoMaster、DaoSession、Dao 包名
+    targetGenDir 'src/main/java'//设置DaoMaster、DaoSession、Dao目录
+}
+
 android {
     compileSdkVersion 28
     defaultConfig {
@@ -33,4 +41,9 @@ dependencies {
     implementation 'com.github.huangshunbo:reloadtipview:1.0.0'
     implementation 'com.github.huangshunbo:smartdialog:1.0.0'
     implementation files('libs/ocr-sdk.jar')
+
+    implementation 'cn.carbs.android:AvatarImageView:1.0.3'
+    implementation 'org.greenrobot:greendao:3.2.2'
+    implementation 'com.github.bumptech.glide:glide:4.4.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.4.0'
 }
