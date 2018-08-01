@@ -23,10 +23,21 @@
         android:hint="门牌号"
         android:layout_below="@id/activity_obligee_select_toolbar"
         android:layout_margin="10dp"/>
+
+    <EditText
+        android:id="@+id/activity_obligee_select_num"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18dp"
+        android:textColor="@color/color_black"
+        android:hint="预编号"
+        android:layout_below="@id/activity_obligee_select_doornumber"
+        android:layout_margin="10dp"/>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/activity_obligee_select_doornumber"
+        android:layout_below="@id/activity_obligee_select_num"
         android:layout_above="@id/activity_obligee_select_fab"
         android:layout_margin="10dp"
         android:fillViewport="true">

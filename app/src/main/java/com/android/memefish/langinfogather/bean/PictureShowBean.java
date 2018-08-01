@@ -10,6 +10,15 @@ public class PictureShowBean implements Serializable,Cloneable {
     private String twoLevel;
     private String threeLevel;
     private List<String> dirs;
+    private List<Integer> maxPicSizes;
+
+    public List<Integer> getMaxPicSizes() {
+        return maxPicSizes;
+    }
+
+    public void setMaxPicSizes(List<Integer> maxPicSizes) {
+        this.maxPicSizes = maxPicSizes;
+    }
 
     public String getTitle() {
         return title;

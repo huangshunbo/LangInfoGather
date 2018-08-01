@@ -1,27 +1,21 @@
 package com.android.memefish.langinfogather.db;
 
-import android.database.sqlite.SQLiteDatabase;
+import android.database.Cursor;
 import android.text.TextUtils;
+import android.util.Log;
 
-import com.android.memefish.langinfogather.BaseApplication;
+import com.android.memefish.langinfogather.bean.ObligeeCountBean;
+import com.android.memefish.langinfogather.util.UserUtil;
 
+import java.util.HashMap;
 import java.util.List;
 
-public class PictureManager {
-
-    private static DaoSession daoSession;
-    private static PictureDao pictureDao;
+public class PictureManager extends BaseManager{
 
 
-    static {
-        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(BaseApplication.application, "picture_manager.db");
-        SQLiteDatabase db = helper.getWritableDatabase();
-        DaoMaster daoMaster = new DaoMaster(db);
-        daoSession = daoMaster.newSession();
-        pictureDao = daoSession.getPictureDao();
+
+    private PictureManager() {
     }
-
-    private PictureManager() {}
 
     public static void insetPicture(Picture picture) {
         pictureDao.insert(picture);
@@ -32,25 +26,57 @@ public class PictureManager {
     }
 
     public static List<Picture> listPicture(String oneLevel) {
-        if (!TextUtils.isEmpty(oneLevel)) {
-            return pictureDao.queryRaw("where ONE_LEVEL=?", oneLevel);
-        } else {
-            throw new RuntimeException("传入参数均不可为空");
-        }
+        return listPicture(oneLevel,null);
     }
 
     public static List<Picture> listPicture(String oneLevel, String twoLevel) {
-        if (TextUtils.isEmpty(twoLevel)) {
-            return listPicture(oneLevel);
-        }
-        return pictureDao.queryRaw("where ONE_LEVEL=? and TWO_LEVEL=?", oneLevel, twoLevel);
+        return listPicture(oneLevel, twoLevel,null);
     }
 
     public static List<Picture> listPicture(String oneLevel, String twoLevel, String threeLevel) {
-        if (TextUtils.isEmpty(threeLevel)) {
-            return listPicture(oneLevel, twoLevel);
+        String userid = UserUtil.getInstance().getUserId();
+        String region = UserUtil.getInstance().getRegion();
+        String obligee = UserUtil.getInstance().getObligee();
+        if(TextUtils.isEmpty(twoLevel)){
+            return pictureDao.queryRaw("where USER=? AND REGION=? AND OBLIGEE=? AND ONE_LEVEL=?", userid,region,obligee,oneLevel);
+        }else if(TextUtils.isEmpty(threeLevel)){
+            return pictureDao.queryRaw("where USER=? AND REGION=? AND OBLIGEE=? AND ONE_LEVEL=? and TWO_LEVEL=?", userid,region,obligee,oneLevel, twoLevel);
+        }else{
+            return pictureDao.queryRaw("where USER=? AND REGION=? AND OBLIGEE=? AND ONE_LEVEL=? and TWO_LEVEL=? and THREE_LEVEL=?", userid,region,obligee,oneLevel, twoLevel, threeLevel);
         }
-        return pictureDao.queryRaw("where ONE_LEVEL=? and TWO_LEVEL=? and THREE_LEVEL=?", oneLevel, twoLevel, threeLevel);
+    }
+
+    public static HashMap<String,ObligeeCountBean> listCount() {
+        String SQL_DISTINCT_ENAME = "SELECT OBLIGEE,ONE_LEVEL,COUNT(*) FROM PICTURE WHERE USER=? AND REGION=? GROUP BY OBLIGEE,ONE_LEVEL";
+        Cursor c = daoSession.getDatabase().rawQuery(SQL_DISTINCT_ENAME, new String[]{"userid","region"});
+        HashMap<String,ObligeeCountBean> beans = new HashMap<>();
+        ObligeeCountBean bean = new ObligeeCountBean();
+        try {
+            if (c.moveToFirst()) {
+                do {
+                    String obligee = c.getString(0);
+                    String oneLevel = c.getString(1);
+                    int count = c.getInt(2);
+                    if(!bean.getObligee().equals(obligee)){
+                        beans.put(bean.getObligee(),bean);
+                        bean = new ObligeeCountBean();
+                    }
+                    if(oneLevel.equals("房屋")){
+                        bean.setFangwu(count);
+                    }else if(oneLevel.equals("权利人")){
+                        bean.setQuanliren(count);
+                    }else if(oneLevel.equals("权属来源")){
+                        bean.setQuanshulaiyuan(count);
+                    }else if(oneLevel.equals("其他")){
+                        bean.setQita(count);
+                    }
+                    Log.d("hsb","result " + c.getString(0) + "  " + c.getString(1) + "  " + c.getString(2));
+                } while (c.moveToNext());
+            }
+        } finally {
+            c.close();
+        }
+        return beans;
     }
 
 

@@ -3,6 +3,8 @@ package com.android.memefish.langinfogather.util;
 public class UserUtil {
 
     private String userId;
+    private String region;
+    private String obligee;
 
     private static UserUtil mUserUtil;
 
@@ -24,7 +26,22 @@ public class UserUtil {
     }
 
     public String getUserId(){
-        return "1";
+        return "userid";
     }
 
+    public String getRegion() {
+        return "region";
+    }
+
+    public void setRegion(String region) {
+        this.region = region;
+    }
+
+    public String getObligee() {
+        return obligee;
+    }
+
+    public void setObligee(String obligee) {
+        this.obligee = obligee;
+    }
 }

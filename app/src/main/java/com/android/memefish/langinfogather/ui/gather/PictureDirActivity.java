@@ -34,8 +34,12 @@ public class PictureDirActivity extends PictureBaseActivity {
                 }else if(pictureShowBean.getThreeLevel() == null){
                     bean.setThreeLevel(pictureShowBean.getDirs().get(i));
                 }
-                bean.setTitle(pictureShowBean.getDirs().get(i));
+                bean.setTitle("FW");
                 intent2.putExtra("pics",bean);
+                if(i != 4){
+                    intent2.putExtra("maxPicSize",1);
+                }
+                intent2.putExtra("baseNum",i);
                 startActivity(intent2);
             }
         });

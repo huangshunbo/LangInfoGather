@@ -24,11 +24,13 @@ public class PictureDao extends AbstractDao<Picture, Long> {
     public static class Properties {
         public final static Property Id = new Property(0, Long.class, "id", true, "_id");
         public final static Property User = new Property(1, String.class, "user", false, "USER");
-        public final static Property OneLevel = new Property(2, String.class, "oneLevel", false, "ONE_LEVEL");
-        public final static Property TwoLevel = new Property(3, String.class, "twoLevel", false, "TWO_LEVEL");
-        public final static Property ThreeLevel = new Property(4, String.class, "threeLevel", false, "THREE_LEVEL");
-        public final static Property Path = new Property(5, String.class, "path", false, "PATH");
-        public final static Property Name = new Property(6, String.class, "name", false, "NAME");
+        public final static Property Region = new Property(2, String.class, "region", false, "REGION");
+        public final static Property Obligee = new Property(3, String.class, "obligee", false, "OBLIGEE");
+        public final static Property OneLevel = new Property(4, String.class, "oneLevel", false, "ONE_LEVEL");
+        public final static Property TwoLevel = new Property(5, String.class, "twoLevel", false, "TWO_LEVEL");
+        public final static Property ThreeLevel = new Property(6, String.class, "threeLevel", false, "THREE_LEVEL");
+        public final static Property Path = new Property(7, String.class, "path", false, "PATH");
+        public final static Property Name = new Property(8, String.class, "name", false, "NAME");
     }
 
 
@@ -46,11 +48,13 @@ public class PictureDao extends AbstractDao<Picture, Long> {
         db.execSQL("CREATE TABLE " + constraint + "\"PICTURE\" (" + //
                 "\"_id\" INTEGER PRIMARY KEY ," + // 0: id
                 "\"USER\" TEXT NOT NULL ," + // 1: user
-                "\"ONE_LEVEL\" TEXT NOT NULL ," + // 2: oneLevel
-                "\"TWO_LEVEL\" TEXT," + // 3: twoLevel
-                "\"THREE_LEVEL\" TEXT," + // 4: threeLevel
-                "\"PATH\" TEXT NOT NULL UNIQUE ," + // 5: path
-                "\"NAME\" TEXT NOT NULL );"); // 6: name
+                "\"REGION\" TEXT NOT NULL ," + // 2: region
+                "\"OBLIGEE\" TEXT NOT NULL ," + // 3: obligee
+                "\"ONE_LEVEL\" TEXT NOT NULL ," + // 4: oneLevel
+                "\"TWO_LEVEL\" TEXT," + // 5: twoLevel
+                "\"THREE_LEVEL\" TEXT," + // 6: threeLevel
+                "\"PATH\" TEXT NOT NULL UNIQUE ," + // 7: path
+                "\"NAME\" TEXT NOT NULL );"); // 8: name
     }
 
     /** Drops the underlying database table. */
@@ -68,19 +72,21 @@ public class PictureDao extends AbstractDao<Picture, Long> {
             stmt.bindLong(1, id);
         }
         stmt.bindString(2, entity.getUser());
-        stmt.bindString(3, entity.getOneLevel());
+        stmt.bindString(3, entity.getRegion());
+        stmt.bindString(4, entity.getObligee());
+        stmt.bindString(5, entity.getOneLevel());
  
         String twoLevel = entity.getTwoLevel();
         if (twoLevel != null) {
-            stmt.bindString(4, twoLevel);
+            stmt.bindString(6, twoLevel);
         }
  
         String threeLevel = entity.getThreeLevel();
         if (threeLevel != null) {
-            stmt.bindString(5, threeLevel);
+            stmt.bindString(7, threeLevel);
         }
-        stmt.bindString(6, entity.getPath());
-        stmt.bindString(7, entity.getName());
+        stmt.bindString(8, entity.getPath());
+        stmt.bindString(9, entity.getName());
     }
 
     @Override
@@ -92,19 +98,21 @@ public class PictureDao extends AbstractDao<Picture, Long> {
             stmt.bindLong(1, id);
         }
         stmt.bindString(2, entity.getUser());
-        stmt.bindString(3, entity.getOneLevel());
+        stmt.bindString(3, entity.getRegion());
+        stmt.bindString(4, entity.getObligee());
+        stmt.bindString(5, entity.getOneLevel());
  
         String twoLevel = entity.getTwoLevel();
         if (twoLevel != null) {
-            stmt.bindString(4, twoLevel);
+            stmt.bindString(6, twoLevel);
         }
  
         String threeLevel = entity.getThreeLevel();
         if (threeLevel != null) {
-            stmt.bindString(5, threeLevel);
+            stmt.bindString(7, threeLevel);
         }
-        stmt.bindString(6, entity.getPath());
-        stmt.bindString(7, entity.getName());
+        stmt.bindString(8, entity.getPath());
+        stmt.bindString(9, entity.getName());
     }
 
     @Override
@@ -117,11 +125,13 @@ public class PictureDao extends AbstractDao<Picture, Long> {
         Picture entity = new Picture( //
             cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
             cursor.getString(offset + 1), // user
-            cursor.getString(offset + 2), // oneLevel
-            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // twoLevel
-            cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // threeLevel
-            cursor.getString(offset + 5), // path
-            cursor.getString(offset + 6) // name
+            cursor.getString(offset + 2), // region
+            cursor.getString(offset + 3), // obligee
+            cursor.getString(offset + 4), // oneLevel
+            cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5), // twoLevel
+            cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6), // threeLevel
+            cursor.getString(offset + 7), // path
+            cursor.getString(offset + 8) // name
         );
         return entity;
     }
@@ -130,11 +140,13 @@ public class PictureDao extends AbstractDao<Picture, Long> {
     public void readEntity(Cursor cursor, Picture entity, int offset) {
         entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
         entity.setUser(cursor.getString(offset + 1));
-        entity.setOneLevel(cursor.getString(offset + 2));
-        entity.setTwoLevel(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
-        entity.setThreeLevel(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
-        entity.setPath(cursor.getString(offset + 5));
-        entity.setName(cursor.getString(offset + 6));
+        entity.setRegion(cursor.getString(offset + 2));
+        entity.setObligee(cursor.getString(offset + 3));
+        entity.setOneLevel(cursor.getString(offset + 4));
+        entity.setTwoLevel(cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5));
+        entity.setThreeLevel(cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6));
+        entity.setPath(cursor.getString(offset + 7));
+        entity.setName(cursor.getString(offset + 8));
      }
     
     @Override

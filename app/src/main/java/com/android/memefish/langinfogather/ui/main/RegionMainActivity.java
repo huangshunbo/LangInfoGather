@@ -2,7 +2,6 @@ package com.android.memefish.langinfogather.ui.main;
 
 import android.content.Intent;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.View;
 
 import com.android.memefish.langinfogather.R;
@@ -28,6 +27,7 @@ public class RegionMainActivity extends MainBaseActivity {
                 startActivityForResult(new Intent(RegionMainActivity.this,RegionSelectActivity.class),REGION_SELECT_CODE);
             }
         });
+        mMainTitleView.setTitle("行政区");
     }
 
     @Override
@@ -58,7 +58,6 @@ public class RegionMainActivity extends MainBaseActivity {
 
         @Override
         public void clickItem(int viewId, RegionBean item, int position) {
-            startActivity(new Intent(RegionMainActivity.this,ObligeeMainActivity.class));
         }
 
         @Override
@@ -70,6 +69,24 @@ public class RegionMainActivity extends MainBaseActivity {
         public void createListItem(int viewId, ViewHolder holder, RegionBean currentItem, List<RegionBean> list, int position) {
             holder.setText(R.id.item_region_title,currentItem.getTime());
             holder.setText(R.id.item_region_time,""+currentItem.getTime());
+            holder.setOnClickListener(R.id.item_region_edit, new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    // TODO: 2018/7/30 0030 编辑行政区 
+                }
+            });
+            holder.setOnClickListener(R.id.item_region_delete, new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    // TODO: 2018/7/30 0030 删除行政区
+                }
+            });
+            holder.setOnClickListener(R.id.item_region_content, new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    startActivity(new Intent(RegionMainActivity.this,ObligeeMainActivity.class));
+                }
+            });
         }
 
         @Override

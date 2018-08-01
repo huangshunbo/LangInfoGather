@@ -1,43 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<com.android.memefish.langinfogather.ui.widget.SwipeItemLayout
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <ImageView
-        android:id="@+id/item_region_ic"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:src="@drawable/ic_exit_to_app_black_24dp"
-        android:layout_margin="10dp"/>
-
-    <TextView
-        android:id="@+id/item_region_title"
+    <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        tools:text="李村2350103112223"
-        android:textSize="18dp"
-        android:textColor="@color/color_black"
-        android:layout_toRightOf="@id/item_region_ic"
-        android:layout_alignTop="@id/item_region_ic"
-        />
+        android:layout_height="match_parent"
+        android:layout_gravity="center_vertical"
+        android:orientation="horizontal" >
 
-    <TextView
-        android:id="@+id/item_region_time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        tools:text="2018-07-25 21:49"
-        android:textSize="12dp"
-        android:textColor="@color/color_gray"
-        android:layout_toRightOf="@id/item_region_ic"
-        android:layout_below="@id/item_region_title"
-        android:layout_marginTop="5dp"/>
+        <TextView
+            android:id="@+id/item_region_edit"
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:background="@color/colorGlod"
+            android:gravity="center"
+            android:text="编辑" />
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_keyboard_arrow_right_black_24dp"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:layout_marginRight="20dp"/>
-</RelativeLayout>
+        <TextView
+            android:id="@+id/item_region_delete"
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:background="@color/colorAccent"
+            android:gravity="center"
+            android:text="删除" />
+    </LinearLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/item_region_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/item_region_ic"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/ic_exit_to_app_black_24dp"
+            android:layout_margin="10dp"/>
+
+        <TextView
+            android:id="@+id/item_region_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="李村2350103112223"
+            android:textSize="18dp"
+            android:textColor="@color/color_black"
+            android:layout_toRightOf="@id/item_region_ic"
+            android:layout_alignTop="@id/item_region_ic"
+            />
+
+        <TextView
+            android:id="@+id/item_region_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="2018-07-25 21:49"
+            android:textSize="12dp"
+            android:textColor="@color/color_gray"
+            android:layout_toRightOf="@id/item_region_ic"
+            android:layout_below="@id/item_region_title"
+            android:layout_marginTop="5dp"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_keyboard_arrow_right_black_24dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="20dp"/>
+    </RelativeLayout>
+
+</com.android.memefish.langinfogather.ui.widget.SwipeItemLayout>
+

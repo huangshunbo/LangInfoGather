@@ -1,21 +1,76 @@
 package com.android.memefish.langinfogather.bean;
 
+import java.util.HashMap;
+
 public class ObligeeBean {
 
-    private String name;
+    //名字
+    private String[] name;
+    //属性
+    private String[] propertys;
+    //门牌号
     private String houseNumber;
-    private String type;
+    //状态
     private String status;
+    //时间
     private String time;
-    private String[] tags;
+    //预编码
+    private String num;
 
-    public String getName() {
+    private HashMap<String,ObligeeCountBean> tags;
+
+    public String getNum() {
+        return num;
+    }
+
+    public void setNum(String num) {
+        this.num = num;
+    }
+
+    public String[] getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(String ...name) {
         this.name = name;
     }
+
+    public String getNames(){
+        StringBuffer stringBuffer = new StringBuffer();
+        for(String s : name){
+            stringBuffer.append(s + ",");
+        }
+        stringBuffer.deleteCharAt(stringBuffer.length()-1);
+        return stringBuffer.toString();
+    }
+
+    public String getNameAndProperty(){
+        StringBuffer stringBuffer = new StringBuffer();
+        for(int i=0; i<name.length; i++){
+            stringBuffer.append(name[i]);
+            stringBuffer.append("("+ propertys[i]+"),");
+        }
+        stringBuffer.deleteCharAt(stringBuffer.length()-1);
+        return stringBuffer.toString();
+    }
+
+    public String[] getProperty() {
+        return propertys;
+    }
+
+    public String getPropertys(){
+        StringBuffer stringBuffer = new StringBuffer();
+        for(String s : propertys){
+            stringBuffer.append(s + ",");
+        }
+        stringBuffer.deleteCharAt(stringBuffer.length()-1);
+        return stringBuffer.toString();
+    }
+
+    public void setPropertys(String ... propertys) {
+        this.propertys = propertys;
+    }
+
 
     public String getHouseNumber() {
         return houseNumber;
@@ -23,14 +78,6 @@ public class ObligeeBean {
 
     public void setHouseNumber(String houseNumber) {
         this.houseNumber = houseNumber;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
     }
 
     public String getStatus() {
@@ -49,11 +96,11 @@ public class ObligeeBean {
         this.time = time;
     }
 
-    public String[] getTags() {
+    public HashMap<String, ObligeeCountBean> getTags() {
         return tags;
     }
 
-    public void setTags(String[] tags) {
+    public void setTags(HashMap<String, ObligeeCountBean> tags) {
         this.tags = tags;
     }
 }

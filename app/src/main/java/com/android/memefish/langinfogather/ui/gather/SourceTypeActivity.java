@@ -33,7 +33,7 @@ public class SourceTypeActivity extends BaseActivity implements View.OnClickList
         llHourse = findViewById(R.id.activity_source_type_hourse);
         llOther = findViewById(R.id.activity_source_type_other);
 
-        mToolbar.setTitle("张三");
+        mToolbar.setTitle("权属来源");
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -11,6 +11,7 @@ import com.android.memefish.langinfogather.R;
 import com.android.memefish.langinfogather.bean.PictureShowBean;
 import com.android.memefish.langinfogather.mvp.BasePresenter;
 import com.android.memefish.langinfogather.mvp.base.BaseActivity;
+import com.android.memefish.langinfogather.util.UserUtil;
 
 import java.util.Arrays;
 
@@ -42,7 +43,7 @@ public class GatherTypeActivity extends BaseActivity implements View.OnClickList
         llOther = findViewById(R.id.activity_gather_type_other);
         llQuestionNaire = findViewById(R.id.activity_gather_type_questionnaire);
 
-        mToolbar.setTitle("张三");
+        mToolbar.setTitle(UserUtil.getInstance().getObligee());
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -24,7 +24,7 @@ public class ObligeeItem extends FrameLayout implements AdapterView.OnItemClickL
     private ImageView ivDel;
 
     private ListPopupWindow mListPopupWindow;
-    private String[] items = new String[]{"个人","企业","事业单位","国家机关","其他"};
+    private String[] items = new String[]{"继承人","买卖","其他"};
 
     public ObligeeItem(@NonNull Context context,View anchorView) {
         super(context);
@@ -73,5 +73,13 @@ public class ObligeeItem extends FrameLayout implements AdapterView.OnItemClickL
             return null;
         }
         return etName.getText().toString();
+    }
+
+    public void setType(String type){
+        tvType.setText(type);
+    }
+
+    public void setName(String name){
+        etName.setText(name);
     }
 }

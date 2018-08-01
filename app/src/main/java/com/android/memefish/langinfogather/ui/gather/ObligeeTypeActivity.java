@@ -16,6 +16,8 @@ import com.android.memefish.langinfogather.R;
 import com.android.memefish.langinfogather.bean.PictureShowBean;
 import com.android.memefish.langinfogather.mvp.BasePresenter;
 import com.android.memefish.langinfogather.mvp.base.BaseActivity;
+import com.android.memefish.langinfogather.util.UserUtil;
+
 /**
  * @author: huangshunbo
  * @Filename: ObligeeTypeActivity
@@ -28,7 +30,7 @@ public class ObligeeTypeActivity extends BaseActivity {
     Toolbar mToolbar;
     ListView mListView;
 
-    private String[] names = new String[]{"张三","李四","王五"};
+    private String[] names = UserUtil.getInstance().getObligee().split(",");
 
     @Override
     protected BasePresenter createPresenter() {
@@ -44,7 +46,7 @@ public class ObligeeTypeActivity extends BaseActivity {
         mListView = findViewById(R.id.activity_obligee_type_list);
         mListView.setAdapter(new MyListAdapter(this));
 
-        mToolbar.setTitle("张三");
+        mToolbar.setTitle("权利人");
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

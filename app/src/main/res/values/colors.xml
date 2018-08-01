@@ -11,4 +11,10 @@
     <color name="color_black">#333333</color>
     <color name="color_gray">#999999</color>
     <color name="golor_gray2">#e5e5e5</color>
+
+    <color name="color1">#7ed728</color>
+    <color name="color2">#2dd2d0</color>
+    <color name="color3">#c166d8</color>
+    <color name="color4">#ff9518</color>
+
 </resources>

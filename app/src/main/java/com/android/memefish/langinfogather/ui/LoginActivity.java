@@ -15,8 +15,10 @@ import com.android.memefish.langinfogather.R;
 import com.android.memefish.langinfogather.mvp.base.BaseActivity;
 import com.android.memefish.langinfogather.presenter.LoginPresenter;
 import com.android.memefish.langinfogather.ui.main.ObligeeMainActivity;
+import com.android.memefish.langinfogather.util.UserUtil;
 import com.android.minlib.smarttool.permission.PermissionCallback;
 import com.android.minlib.smarttool.permission.SmartPermission;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.List;
 
@@ -39,7 +41,6 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements View.
         etPhone = findViewById(R.id.activity_login_phone);
         etPassword = findViewById(R.id.activity_login_password);
         tvSubmit = findViewById(R.id.activity_login_submit);
-
         tvSubmit.setOnClickListener(this);
         permission();
     }
@@ -71,6 +72,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements View.
     public void onClick(View view) {
         int id = view.getId();
         if (id == R.id.activity_login_submit) {
+            MobclickAgent.onProfileSignIn(UserUtil.getInstance().getUserId());
             startActivity(new Intent(this,ObligeeMainActivity.class));
             finish();
         }

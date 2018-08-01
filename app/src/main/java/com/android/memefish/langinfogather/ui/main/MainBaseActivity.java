@@ -38,14 +38,17 @@ public abstract class MainBaseActivity extends BaseActivity<MainPresenter>{
         mSmartRecyclerView.setDiver(5, R.drawable.line_left_margin);
         mSmartRecyclerView.setMode(SmartRecyclerView.STATE_MODE.BOTH);
         onInitList();
-        mSmartRecyclerView.loadData();
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mSmartRecyclerView.loadData();
     }
 
     abstract void onInitList();
 
     private void initTitleView() {
-        mMainTitleView.setTitle("标题");
         mMainTitleView.setCenterClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

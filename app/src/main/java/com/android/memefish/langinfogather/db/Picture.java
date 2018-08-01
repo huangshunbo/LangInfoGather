@@ -9,26 +9,41 @@ import org.greenrobot.greendao.annotation.Generated;
 @Entity
 public class Picture {
 
+
     @Id
     private Long id;
+    //用户名
     @NotNull
     private String user;
+    //行政区
+    @NotNull
+    private String region;
+    //权利人
+    @NotNull
+    private String obligee;
+    //层级
     @NotNull
     private String oneLevel;
     private String twoLevel;
     private String threeLevel;
+    //存储路径
     @NotNull
     @Unique
     private String path;
+    //文件名
     @NotNull
     private String name;
 
-    @Generated(hash = 1250045855)
-    public Picture(Long id, @NotNull String user, @NotNull String oneLevel,
-            String twoLevel, String threeLevel, @NotNull String path,
-            @NotNull String name) {
+
+
+    @Generated(hash = 937080843)
+    public Picture(Long id, @NotNull String user, @NotNull String region,
+            @NotNull String obligee, @NotNull String oneLevel, String twoLevel,
+            String threeLevel, @NotNull String path, @NotNull String name) {
         this.id = id;
         this.user = user;
+        this.region = region;
+        this.obligee = obligee;
         this.oneLevel = oneLevel;
         this.twoLevel = twoLevel;
         this.threeLevel = threeLevel;
@@ -38,6 +53,22 @@ public class Picture {
 
     @Generated(hash = 1602548376)
     public Picture() {
+    }
+
+    public String getObligee() {
+        return obligee;
+    }
+
+    public void setObligee(String obligee) {
+        this.obligee = obligee;
+    }
+
+    public String getRegion() {
+        return region;
+    }
+
+    public void setRegion(String region) {
+        this.region = region;
     }
 
     public String getName() {

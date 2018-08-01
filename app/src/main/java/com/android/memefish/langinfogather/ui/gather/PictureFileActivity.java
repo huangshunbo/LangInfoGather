@@ -19,6 +19,7 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.memefish.langinfogather.R;
 import com.android.memefish.langinfogather.db.Picture;
@@ -42,14 +43,18 @@ public class PictureFileActivity extends PictureBaseActivity {
     private static final int CAMERA_CODE = 10003;
     File tmpFile;
     private MyAdapter myAdapter;
+    private int maxPicSize = -1;
+    private int baseNum = 0;
 
     @SuppressLint("RestrictedApi")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        fab = findViewById(R.id.activity_picture_base_fab);
+        maxPicSize = getIntent().getIntExtra("maxPicSize",-1);
+        baseNum = getIntent().getIntExtra("baseNum",0);
 
+        fab = findViewById(R.id.activity_picture_base_fab);
         mToolbar.setTitle(pictureShowBean.getTitle());
         pics = PictureManager.listPicture(pictureShowBean.getOneLevel(),pictureShowBean.getTwoLevel(),pictureShowBean.getThreeLevel());
         myAdapter = new MyAdapter(this);
@@ -59,13 +64,22 @@ public class PictureFileActivity extends PictureBaseActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(maxPicSize != -1 && myAdapter.getCount() >= maxPicSize){
+                    Toast.makeText(PictureFileActivity.this,"该目录只能保存"+maxPicSize+"张图片",Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 newPicture = new Picture();
                 newPicture.setUser(UserUtil.getInstance().getUserId());
+                newPicture.setRegion(UserUtil.getInstance().getRegion());
+                newPicture.setObligee(UserUtil.getInstance().getObligee());
                 newPicture.setOneLevel(pictureShowBean.getOneLevel());
                 newPicture.setTwoLevel(pictureShowBean.getTwoLevel());
                 newPicture.setThreeLevel(pictureShowBean.getThreeLevel());
-                newPicture.setName(pictureShowBean.getTitle()+formatNum(pics.size()+1));
+                newPicture.setName(pictureShowBean.getTitle()+formatNum(baseNum+pics.size()+1));
                 tmpFile = PictureUtil.getPictureFile(newPicture);
+                if(!tmpFile.getParentFile().exists()){
+                    tmpFile.getParentFile().mkdirs();
+                }
                 if(!tmpFile.exists()){
                     try {
                         tmpFile.createNewFile();
@@ -127,6 +141,7 @@ public class PictureFileActivity extends PictureBaseActivity {
         if(resultCode == Activity.RESULT_OK){
             if(requestCode == CAMERA_CODE){
                 if(tmpFile != null && tmpFile.exists()){
+                    PictureUtil.compressPicture(tmpFile.getAbsolutePath());
                     newPicture.setPath(tmpFile.getAbsolutePath());
                     pics.add(newPicture);
                     myAdapter.notifyDataSetChanged();
@@ -152,7 +167,14 @@ public class PictureFileActivity extends PictureBaseActivity {
 
         @Override
         public int getCount() {
-            return pics!=null ? pics.size() : 0;
+            if(pics == null){
+                return 0;
+            }
+            if(maxPicSize == -1 || pics.size() <= maxPicSize){
+                return pics.size();
+            }else {
+                return maxPicSize;
+            }
         }
 
         @Override

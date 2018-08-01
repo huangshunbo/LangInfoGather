@@ -17,4 +17,32 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <style name="ToolbarTheme" parent="Theme.AppCompat.Light">
+        <!-- 设置 toolbar 溢出菜单的文字的颜色 -->
+        <item name="android:textColor">@android:color/holo_red_dark</item>
+        <item name="actionMenuTextColor">@android:color/white</item>
+        <item name="colorButtonNormal">@android:color/white</item>
+        <item name="colorControlNormal">@android:color/white</item>
+    </style>
+
+    <style name="reloadtip_default_attr">
+        <item name="tip_txt_size">18dp</item>
+        <item name="action_txt_size">15dp</item>
+        <item name="tip_txt_color">#333333</item>
+        <item name="action_txt_color">#999999</item>
+        <item name="tip_txt_topmargin">20dp</item>
+        <item name="action_txt_topmargin">15dp</item>
+        <item name="content_minheigh">300dp</item>
+        <item name="content_topmargin">-30dp</item>
+
+        <item name="notdata_icon">@mipmap/default_no_data</item>
+        <item name="notdata_tip_txt">暂无数据</item>
+        <item name="notdata_actoin_txt">点击刷新</item>
+        <item name="notnet_icon">@mipmap/default_no_network</item>
+        <item name="notnet_tip_txt">网络不给力，请稍候重试</item>
+        <item name="notnet_actoin_txt">点击刷新</item>
+        <item name="error_icon">@mipmap/default_no_network</item>
+        <item name="error_tip_txt">服务器异常</item>
+        <item name="error_actoin_txt">点击刷新</item>
+    </style>
 </resources>
