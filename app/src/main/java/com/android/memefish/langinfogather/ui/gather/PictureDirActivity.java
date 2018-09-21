@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.android.memefish.langinfogather.R;
 import com.android.memefish.langinfogather.bean.PictureShowBean;
+import com.android.memefish.langinfogather.util.PictureUtil;
 
 public class PictureDirActivity extends PictureBaseActivity {
 
@@ -40,6 +41,7 @@ public class PictureDirActivity extends PictureBaseActivity {
                     intent2.putExtra("maxPicSize",1);
                 }
                 intent2.putExtra("baseNum",i);
+                intent2.putExtra("sortBase", (PictureUtil.FW_SORT_BASE + i*1000));
                 startActivity(intent2);
             }
         });

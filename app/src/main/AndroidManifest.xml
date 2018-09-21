@@ -4,27 +4,32 @@
     package="com.android.memefish.langinfogather">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.CAMERA"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.READ_LOGS"
+    <uses-permission
+        android:name="android.permission.READ_LOGS"
         tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.MEDIA_CONTENT_CONTROL"
+        tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.VIBRATE"/>
+
     <application
+        android:name=".BaseApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/icon"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
-        android:name=".BaseApplication">
+        android:theme="@style/AppTheme">
         <activity
             android:name=".ui.LoginActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:launchMode="singleTask">
+            android:launchMode="singleTask"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -32,17 +37,44 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.main.RegionMainActivity" android:launchMode="singleTask"/>
-        <activity android:name=".ui.main.ObligeeMainActivity" android:launchMode="singleTask"/>
-        <activity android:name=".ui.UserCenterActivity" android:launchMode="singleTask"/>
-        <activity android:name=".ui.main.RegionSelectActivity"  android:launchMode="singleTask"/>
-        <activity android:name=".ui.main.ObligeeSelectActivity" android:launchMode="singleTask" />
-        <activity android:name=".ui.gather.GatherTypeActivity" android:launchMode="singleTask" />
-        <activity android:name=".ui.gather.SourceTypeActivity" android:launchMode="singleTask" />
-        <activity android:name=".ui.gather.ObligeeTypeActivity" android:launchMode="singleTask" />
-        <activity android:name=".ui.gather.QuestionNaireActivity" android:launchMode="singleTask" />
-        <activity android:name=".ui.gather.PictureDirActivity" android:launchMode="singleTask" />
-        <activity android:name=".ui.gather.PictureFileActivity" android:launchMode="singleTask" />
+        <activity
+            android:name=".ui.main.RegionMainActivity"
+            android:launchMode="singleTask"
+            android:windowSoftInputMode="adjustResize"/>
+        <activity
+            android:name=".ui.main.ObligeeMainActivity"
+            android:launchMode="singleTask"
+            android:windowSoftInputMode="adjustResize"/>
+        <activity
+            android:name=".ui.UserCenterActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".ui.main.RegionSelectActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".ui.main.ObligeeSelectActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".ui.gather.GatherTypeActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".ui.gather.SourceTypeActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".ui.gather.ObligeeTypeActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".ui.gather.QuestionNaireActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".ui.gather.PictureDirActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".ui.gather.PictureFileActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".ui.gather.PhotoViewActivity"
+            android:launchMode="singleTask" />
 
 
         <provider
@@ -50,10 +82,12 @@
             android:authorities="com.android.memefish.langinfogather"
             android:exported="false"
             android:grantUriPermissions="true">
-        <meta-data
-            android:name="android.support.FILE_PROVIDER_PATHS"
-            android:resource="@xml/file_paths" />
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
         </provider>
+
+
     </application>
 
 </manifest>

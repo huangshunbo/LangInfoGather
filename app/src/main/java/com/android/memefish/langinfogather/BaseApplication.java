@@ -3,7 +3,6 @@ package com.android.memefish.langinfogather;
 import android.app.Application;
 
 import com.android.memefish.langinfogather.ocr.baidu.BaiduOrc;
-import com.android.memefish.langinfogather.util.UserUtil;
 import com.baidu.ocr.sdk.OCR;
 import com.baidu.ocr.sdk.OnResultListener;
 import com.baidu.ocr.sdk.exception.OCRError;
@@ -11,6 +10,7 @@ import com.baidu.ocr.sdk.model.AccessToken;
 import com.tencent.bugly.crashreport.CrashReport;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.commonsdk.UMConfigure;
+import com.uuzuche.lib_zxing.activity.ZXingLibrary;
 
 public class BaseApplication extends Application {
 
@@ -23,6 +23,11 @@ public class BaseApplication extends Application {
         initBaiduOcr();
         initBugly();
         initYoumeng();
+        initZxing();
+    }
+
+    private void initZxing() {
+        ZXingLibrary.initDisplayOpinion(this);
     }
 
     private void initBaiduOcr() {

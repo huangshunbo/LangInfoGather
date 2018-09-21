@@ -1,10 +1,12 @@
 package com.android.memefish.langinfogather.db;
 
+import com.android.memefish.langinfogather.bean.ObligeeCountBean;
+
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.NotNull;
-import org.greenrobot.greendao.annotation.Unique;
+import org.greenrobot.greendao.annotation.Transient;
 
 @Entity
 public class Obligee{
@@ -12,30 +14,32 @@ public class Obligee{
     @Id
     private Long id;
     @NotNull
-    private String region;
+    private Long region;//行政区id
     @NotNull
-    private String user;
+    private String user;//用户id
     //预编码
     @NotNull
-    @Unique
     private String num;
     //门牌号
-    @NotNull
-    @Unique
     private String houseNumber;
     //状态
     private String status;
     //时间
     private String time;
     //姓名
-    private String names;
-    //属性
-    private String propertys;
+    @NotNull
+    private String name;//主权利人
+    @Transient
+    private ObligeeCountBean tags;
 
-    @Generated(hash = 76991564)
-    public Obligee(Long id, @NotNull String region, @NotNull String user,
-            @NotNull String num, @NotNull String houseNumber, String status,
-            String time, String names, String propertys) {
+    @Generated(hash = 987620670)
+    public Obligee() {
+    }
+
+    @Generated(hash = 1368412511)
+    public Obligee(Long id, @NotNull Long region, @NotNull String user,
+            @NotNull String num, String houseNumber, String status, String time,
+            @NotNull String name) {
         this.id = id;
         this.region = region;
         this.user = user;
@@ -43,19 +47,14 @@ public class Obligee{
         this.houseNumber = houseNumber;
         this.status = status;
         this.time = time;
-        this.names = names;
-        this.propertys = propertys;
+        this.name = name;
     }
 
-    @Generated(hash = 987620670)
-    public Obligee() {
-    }
-
-    public String getRegion() {
+    public Long getRegion() {
         return region;
     }
 
-    public void setRegion(String region) {
+    public void setRegion(Long region) {
         this.region = region;
     }
 
@@ -107,32 +106,19 @@ public class Obligee{
         this.time = time;
     }
 
-    public String getNames() {
-        return names;
+    public String getName() {
+        return name;
     }
 
-    public void setNames(String names) {
-        this.names = names;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getPropertys() {
-        return propertys;
+    public ObligeeCountBean getTags() {
+        return tags;
     }
 
-    public void setPropertys(String propertys) {
-        this.propertys = propertys;
+    public void setTags(ObligeeCountBean tags) {
+        this.tags = tags;
     }
-
-    public String getNameAndProperty(){
-        StringBuffer stringBuffer = new StringBuffer();
-        String[] nameArray = names.split(",");
-        String[] proArray = propertys.split(",");
-        for(int i=0; i<nameArray.length; i++){
-            stringBuffer.append(nameArray[i]);
-            stringBuffer.append("("+ proArray[i]+"),");
-        }
-        stringBuffer.deleteCharAt(stringBuffer.length()-1);
-        return stringBuffer.toString();
-    }
-
 }

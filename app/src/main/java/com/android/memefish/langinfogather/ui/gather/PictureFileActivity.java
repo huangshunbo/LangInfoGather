@@ -7,7 +7,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -22,8 +21,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.memefish.langinfogather.R;
+import com.android.memefish.langinfogather.bean.ObligeeCountBean;
 import com.android.memefish.langinfogather.db.Picture;
-import com.android.memefish.langinfogather.db.PictureManager;
+import com.android.memefish.langinfogather.db.manager.PictureManager;
 import com.android.memefish.langinfogather.util.PictureUtil;
 import com.android.memefish.langinfogather.util.UserUtil;
 import com.android.minlib.smarttool.tool.PhotoTool;
@@ -31,8 +31,7 @@ import com.bumptech.glide.Glide;
 
 import java.io.File;
 import java.io.IOException;
-import java.text.DecimalFormat;
-import java.text.Format;
+import java.util.ArrayList;
 import java.util.List;
 
 public class PictureFileActivity extends PictureBaseActivity {
@@ -45,6 +44,7 @@ public class PictureFileActivity extends PictureBaseActivity {
     private MyAdapter myAdapter;
     private int maxPicSize = -1;
     private int baseNum = 0;
+    private int sortBase = 0;
 
     @SuppressLint("RestrictedApi")
     @Override
@@ -53,10 +53,12 @@ public class PictureFileActivity extends PictureBaseActivity {
 
         maxPicSize = getIntent().getIntExtra("maxPicSize",-1);
         baseNum = getIntent().getIntExtra("baseNum",0);
+        sortBase = getIntent().getIntExtra("sortBase",0);
 
         fab = findViewById(R.id.activity_picture_base_fab);
         mToolbar.setTitle(pictureShowBean.getTitle());
-        pics = PictureManager.listPicture(pictureShowBean.getOneLevel(),pictureShowBean.getTwoLevel(),pictureShowBean.getThreeLevel());
+//        pics = PictureManager.listPicture(pictureShowBean.getOneLevel(),pictureShowBean.getTwoLevel(),pictureShowBean.getThreeLevel());
+        pics = PictureManager.listPictureWithObligee(pictureShowBean.getObligeeId(),pictureShowBean.getOneLevel(),pictureShowBean.getTwoLevel(),pictureShowBean.getThreeLevel());
         myAdapter = new MyAdapter(this);
         mGridView.setAdapter(myAdapter);
         fab.setVisibility(View.VISIBLE);
@@ -71,11 +73,13 @@ public class PictureFileActivity extends PictureBaseActivity {
                 newPicture = new Picture();
                 newPicture.setUser(UserUtil.getInstance().getUserId());
                 newPicture.setRegion(UserUtil.getInstance().getRegion());
-                newPicture.setObligee(UserUtil.getInstance().getObligee());
+                newPicture.setoId(UserUtil.getInstance().getObligeeId());
+                newPicture.setObligeeId(pictureShowBean.getObligeeId());
                 newPicture.setOneLevel(pictureShowBean.getOneLevel());
                 newPicture.setTwoLevel(pictureShowBean.getTwoLevel());
                 newPicture.setThreeLevel(pictureShowBean.getThreeLevel());
-                newPicture.setName(pictureShowBean.getTitle()+formatNum(baseNum+pics.size()+1));
+                newPicture.setName(pictureShowBean.getTitle() + System.currentTimeMillis());
+                newPicture.setSort(sortBase+pics.size()+1);
                 tmpFile = PictureUtil.getPictureFile(newPicture);
                 if(!tmpFile.getParentFile().exists()){
                     tmpFile.getParentFile().mkdirs();
@@ -95,16 +99,24 @@ public class PictureFileActivity extends PictureBaseActivity {
         mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent = new Intent(Intent.ACTION_VIEW);
-                Uri uri;
-                if (Build.VERSION.SDK_INT >= 24) {
-                    File file = new File(pics.get(i).getPath());
-                    uri = FileProvider.getUriForFile(PictureFileActivity.this, "com.android.memefish.langinfogather", file);
-                    intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                } else {
-                    uri = Uri.fromFile(new File(pics.get(i).getPath()));
+//                Intent intent = new Intent(Intent.ACTION_VIEW);
+//                Uri uri;
+//                if (Build.VERSION.SDK_INT >= 24) {
+//                    File file = new File(pics.get(i).getPath());
+//                    uri = FileProvider.getUriForFile(PictureFileActivity.this, "com.android.memefish.langinfogather", file);
+//                    intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+//                } else {
+//                    uri = Uri.fromFile(new File(pics.get(i).getPath()));
+//                }
+//                intent.setDataAndType(uri, "image/*");
+//                startActivity(intent);
+                ArrayList<String> picList = new ArrayList<>();
+                for(Picture pic : pics){
+                    picList.add(pic.getPath());
                 }
-                intent.setDataAndType(uri, "image/*");
+                Intent intent = new Intent(PictureFileActivity.this,PhotoViewActivity.class);
+                intent.putExtra("num",i);
+                intent.putStringArrayListExtra("pics",picList);
                 startActivity(intent);
             }
         });
@@ -119,9 +131,15 @@ public class PictureFileActivity extends PictureBaseActivity {
                         .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 dialog.dismiss();
+                                File file = new File(picture.getPath());
+                                if(file.exists()){
+                                    file.delete();
+                                }
                                 pics.remove(picture);
                                 myAdapter.notifyDataSetChanged();
                                 PictureManager.deletePicture(picture);
+                                changeCount(-1);
+                                fileScan(file.getAbsolutePath());
                             }
                         })
                         .setNegativeButton("取消", new DialogInterface.OnClickListener() {
@@ -135,6 +153,23 @@ public class PictureFileActivity extends PictureBaseActivity {
         });
     }
 
+    private void changeCount(int count) {
+        String type = pictureShowBean.getOneLevel();
+        ObligeeCountBean countBean = UserUtil.getInstance().getTags();
+        if(type.equals("权利人")){
+            countBean.setQuanliren(countBean.getQuanliren() + count);
+        }else if(type.equals("房屋")){
+            countBean.setFangwu(countBean.getFangwu() + count);
+        }else if(type.equals("权属来源")){
+            countBean.setQuanshulaiyuan(countBean.getQuanshulaiyuan() + count);
+        }else if(type.equals("图纸")){
+            countBean.setTuzhi(countBean.getTuzhi() + count);
+        }else if(type.equals("其他")){
+            countBean.setQita(countBean.getQita() + count);
+        }
+    }
+
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -146,15 +181,10 @@ public class PictureFileActivity extends PictureBaseActivity {
                     pics.add(newPicture);
                     myAdapter.notifyDataSetChanged();
                     PictureManager.insetPicture(newPicture);
+                    changeCount(1);
                 }
             }
         }
-    }
-
-
-    public String formatNum(int num){
-        Format f1 = new DecimalFormat("000");
-        return f1.format(num);
     }
 
     class MyAdapter extends BaseAdapter
@@ -200,7 +230,7 @@ public class PictureFileActivity extends PictureBaseActivity {
                 viewHolder = (ViewHolder) view.getTag();
             }
 
-            viewHolder.textView.setText(pics.get(i).getName());
+            viewHolder.textView.setText(pictureShowBean.getTitle() + PictureUtil.formatNum(i+1));
 
             Glide.with(context)
                     .load(new File(pics.get(i).getPath()))
@@ -214,5 +244,10 @@ public class PictureFileActivity extends PictureBaseActivity {
             ImageView imageView;
             TextView textView;
         }
+    }
+
+    public void  fileScan(String file){
+        Uri data = Uri.parse("file://" +file);
+        sendBroadcast(new  Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, data));
     }
 }

@@ -25,6 +25,7 @@ public class ObligeeItem extends FrameLayout implements AdapterView.OnItemClickL
 
     private ListPopupWindow mListPopupWindow;
     private String[] items = new String[]{"继承人","买卖","其他"};
+    private OnClickListener onClickListener;
 
     public ObligeeItem(@NonNull Context context,View anchorView) {
         super(context);
@@ -43,6 +44,9 @@ public class ObligeeItem extends FrameLayout implements AdapterView.OnItemClickL
             @Override
             public void onClick(View view) {
                 ((ViewGroup)getParent()).removeView(ObligeeItem.this);
+                if(onClickListener != null){
+                    onClickListener.onClick(view);
+                }
             }
         });
 
@@ -55,6 +59,10 @@ public class ObligeeItem extends FrameLayout implements AdapterView.OnItemClickL
         mListPopupWindow.setAdapter(new ArrayAdapter<String>(getContext(),
                 android.R.layout.simple_list_item_1, items));
         tvType.setText(items[0]);
+    }
+
+    public void setOnDelListener(OnClickListener listener){
+        onClickListener = listener;
     }
 
     @Override

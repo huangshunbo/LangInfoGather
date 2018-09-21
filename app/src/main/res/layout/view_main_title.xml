@@ -41,6 +41,8 @@
             android:textColorHint="@color/alphaWhite"
             android:textCursorDrawable="@drawable/edittext_cursor_drawable"
             android:imeOptions="actionSearch"
+            android:lines="1"
+            android:singleLine="true"
             />
         <ImageView
             android:id="@+id/view_main_search_content_clear"

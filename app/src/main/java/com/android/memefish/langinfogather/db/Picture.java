@@ -17,10 +17,12 @@ public class Picture {
     private String user;
     //行政区
     @NotNull
-    private String region;
-    //权利人
+    private Long region;
+    //权利人id
+    private Long oId;
+    //子权利人id
     @NotNull
-    private String obligee;
+    private Long obligeeId;
     //层级
     @NotNull
     private String oneLevel;
@@ -33,41 +35,52 @@ public class Picture {
     //文件名
     @NotNull
     private String name;
-
-
-
-    @Generated(hash = 937080843)
-    public Picture(Long id, @NotNull String user, @NotNull String region,
-            @NotNull String obligee, @NotNull String oneLevel, String twoLevel,
-            String threeLevel, @NotNull String path, @NotNull String name) {
-        this.id = id;
-        this.user = user;
-        this.region = region;
-        this.obligee = obligee;
-        this.oneLevel = oneLevel;
-        this.twoLevel = twoLevel;
-        this.threeLevel = threeLevel;
-        this.path = path;
-        this.name = name;
-    }
+    @NotNull
+    private int sort;
 
     @Generated(hash = 1602548376)
     public Picture() {
     }
 
-    public String getObligee() {
-        return obligee;
+    @Generated(hash = 2121320907)
+    public Picture(Long id, @NotNull String user, @NotNull Long region, Long oId,
+            @NotNull Long obligeeId, @NotNull String oneLevel, String twoLevel,
+            String threeLevel, @NotNull String path, @NotNull String name,
+            int sort) {
+        this.id = id;
+        this.user = user;
+        this.region = region;
+        this.oId = oId;
+        this.obligeeId = obligeeId;
+        this.oneLevel = oneLevel;
+        this.twoLevel = twoLevel;
+        this.threeLevel = threeLevel;
+        this.path = path;
+        this.name = name;
+        this.sort = sort;
     }
 
-    public void setObligee(String obligee) {
-        this.obligee = obligee;
+    public Long getoId() {
+        return oId;
     }
 
-    public String getRegion() {
+    public void setoId(Long oId) {
+        this.oId = oId;
+    }
+
+    public Long getObligeeId() {
+        return obligeeId;
+    }
+
+    public void setObligeeId(Long obligeeId) {
+        this.obligeeId = obligeeId;
+    }
+
+    public Long getRegion() {
         return region;
     }
 
-    public void setRegion(String region) {
+    public void setRegion(Long region) {
         this.region = region;
     }
 
@@ -134,5 +147,21 @@ public class Picture {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public int getSort() {
+        return sort;
+    }
+
+    public void setSort(int sort) {
+        this.sort = sort;
+    }
+
+    public Long getOId() {
+        return this.oId;
+    }
+
+    public void setOId(Long oId) {
+        this.oId = oId;
     }
 }

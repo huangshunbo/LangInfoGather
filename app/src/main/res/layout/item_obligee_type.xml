@@ -4,7 +4,9 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/color_white"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -31,27 +33,66 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
-        <TextView
-            android:id="@+id/item_obligee_type_obligee"
+        <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:drawableTop="@mipmap/ic_item_obligee"
-            android:drawablePadding="10dp"
-            android:layout_margin="10dp"
-            android:gravity="center_horizontal"
-            android:text="身份证"
-            />
-        <TextView
-            android:id="@+id/item_obligee_type_booklet"
+            android:layout_weight="1">
+            <TextView
+                android:id="@+id/item_obligee_type_obligee"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableTop="@mipmap/ic_item_obligee"
+                android:drawablePadding="10dp"
+                android:layout_margin="10dp"
+                android:gravity="center_horizontal"
+                android:text="身份证"
+                android:layout_centerInParent="true"
+                />
+            <cn.carbs.android.avatarimageview.library.AvatarImageView
+                android:id="@+id/item_obligee_type_obligee_num"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                app:aiv_BoarderWidth="2dp"
+                app:aiv_ShowBoarder="true"
+                app:aiv_TextSizeRatio="0.6"
+                app:aiv_TextColor="@color/color_white"
+                app:aiv_BoarderColor="@color/color_white"
+                android:layout_alignRight="@id/item_obligee_type_obligee"
+                android:layout_margin="-10dp"
+                />
+        </RelativeLayout>
+
+        <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:drawableTop="@mipmap/ic_item_booklet"
-            android:drawablePadding="10dp"
-            android:layout_margin="10dp"
-            android:gravity="center_horizontal"
-            android:text="户口簿"
-            />
+            android:layout_weight="1">
+            <TextView
+                android:id="@+id/item_obligee_type_booklet"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawableTop="@mipmap/ic_item_booklet"
+                android:drawablePadding="10dp"
+                android:layout_margin="10dp"
+                android:gravity="center_horizontal"
+                android:text="户口簿"
+                android:layout_centerInParent="true"
+                />
+            <cn.carbs.android.avatarimageview.library.AvatarImageView
+                android:id="@+id/item_obligee_type_booklet_num"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                app:aiv_BoarderWidth="2dp"
+                app:aiv_ShowBoarder="true"
+                app:aiv_TextSizeRatio="0.6"
+                app:aiv_TextColor="@color/color_white"
+                app:aiv_BoarderColor="@color/color_white"
+                android:layout_alignRight="@id/item_obligee_type_booklet"
+                android:layout_margin="-10dp"
+                />
+        </RelativeLayout>
+
     </LinearLayout>
 </LinearLayout>

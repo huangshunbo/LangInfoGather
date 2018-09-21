@@ -11,6 +11,15 @@ public class PictureShowBean implements Serializable,Cloneable {
     private String threeLevel;
     private List<String> dirs;
     private List<Integer> maxPicSizes;
+    private Long obligeeId;
+
+    public Long getObligeeId() {
+        return obligeeId;
+    }
+
+    public void setObligeeId(Long obligeeId) {
+        this.obligeeId = obligeeId;
+    }
 
     public List<Integer> getMaxPicSizes() {
         return maxPicSizes;

@@ -2,9 +2,10 @@ package com.android.memefish.langinfogather.bean;
 
 public class ObligeeCountBean {
     private String obligee;
+    private int quanliren = 0;
     private int fangwu = 0;
     private int quanshulaiyuan = 0;
-    private int quanliren = 0;
+    private int tuzhi = 0;
     private int qita = 0;
 
     public String getObligee() {
@@ -37,6 +38,14 @@ public class ObligeeCountBean {
 
     public void setQuanliren(int quanliren) {
         this.quanliren = quanliren;
+    }
+
+    public int getTuzhi() {
+        return tuzhi;
+    }
+
+    public void setTuzhi(int tuzhi) {
+        this.tuzhi = tuzhi;
     }
 
     public int getQita() {

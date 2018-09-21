@@ -3,8 +3,11 @@ package com.android.memefish.langinfogather.util;
 import android.content.Context;
 import android.content.res.AssetManager;
 
+import com.android.memefish.langinfogather.bean.DistrictsBean;
 import com.android.memefish.langinfogather.bean.JsonBean;
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 import org.json.JSONArray;
 
@@ -12,8 +15,38 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Map;
 
 public class ProvinceUtil {
+
+
+    public static ArrayList<DistrictsBean> initJsonData(Context context){
+        ArrayList<DistrictsBean> list = new ArrayList<>();
+        String jsonData = getJson(context,"districts.json");
+        JsonParser parser1 = new JsonParser();
+        JsonObject jsonObj1 = parser1.parse(jsonData).getAsJsonObject();
+        Iterator iterator1 = jsonObj1.entrySet().iterator();
+        while(iterator1.hasNext()) {
+            DistrictsBean districtsBean = new DistrictsBean();
+            ArrayList<DistrictsBean.Area> areas = new ArrayList<>();
+            Map.Entry entry1 = (Map.Entry)iterator1.next();
+            JsonObject jsonObj2 = parser1.parse(entry1.getValue().toString()).getAsJsonObject();
+            Iterator iterator2 = jsonObj2.entrySet().iterator();
+            while(iterator2.hasNext()) {
+                DistrictsBean.Area bean = new DistrictsBean.Area();
+                Map.Entry entry2 = (Map.Entry)iterator2.next();
+                bean.setCode(entry2.getKey().toString());
+                bean.setName(entry2.getValue().toString());
+                areas.add(bean);
+            }
+            districtsBean.setMainCode(entry1.getKey().toString());
+            districtsBean.setArea(areas);
+            list.add(districtsBean);
+        }
+        return list;
+    }
+
     public static void initJsonData(Context context,ArrayList<String> options1Items,ArrayList<ArrayList<String>> options2Items,ArrayList<ArrayList<ArrayList<String>>> options3Items) {//解析数据
         /**
          * 注意：assets 目录下的Json文件仅供参考，实际使用可自行替换文件

@@ -19,7 +19,7 @@
         android:rowCount="3"
         android:background="@color/color_white"
         >
-        <LinearLayout
+        <RelativeLayout
             android:id="@+id/activity_gather_type_obligee"
             android:layout_margin="10dp"
             android:orientation="vertical"
@@ -27,18 +27,34 @@
             android:layout_columnWeight="1"
             android:gravity="center">
             <ImageView
+                android:id="@+id/activity_gather_type_obligee_ic"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@mipmap/ic_item_obligee"
-                />
+                android:layout_centerHorizontal="true"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
-                android:text="权利人"/>
-        </LinearLayout>
+                android:layout_below="@id/activity_gather_type_obligee_ic"
+                android:text="权利人"
+                android:layout_centerHorizontal="true"/>
+            <cn.carbs.android.avatarimageview.library.AvatarImageView
+                android:id="@+id/activity_gather_type_obligee_num"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                app:aiv_BoarderWidth="2dp"
+                app:aiv_ShowBoarder="true"
+                app:aiv_TextSizeRatio="0.6"
+                app:aiv_TextColor="@color/color_white"
+                app:aiv_BoarderColor="@color/color_white"
+                android:layout_alignRight="@id/activity_gather_type_obligee_ic"
+                android:layout_margin="-10dp"
+                />
+        </RelativeLayout>
 
-        <LinearLayout
+        <RelativeLayout
             android:id="@+id/activity_gather_type_hourse"
             android:layout_margin="10dp"
             android:orientation="vertical"
@@ -46,18 +62,34 @@
             android:layout_columnWeight="1"
             android:gravity="center">
             <ImageView
+                android:id="@+id/activity_gather_type_hourse_ic"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@mipmap/ic_item_house"
-                />
+                android:layout_centerHorizontal="true"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
-                android:text="房屋"/>
-        </LinearLayout>
+                android:layout_below="@id/activity_gather_type_hourse_ic"
+                android:text="房屋"
+                android:layout_centerHorizontal="true"/>
+            <cn.carbs.android.avatarimageview.library.AvatarImageView
+                android:id="@+id/activity_gather_type_hourse_num"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                app:aiv_BoarderWidth="2dp"
+                app:aiv_ShowBoarder="true"
+                app:aiv_TextSizeRatio="0.6"
+                app:aiv_TextColor="@color/color_white"
+                app:aiv_BoarderColor="@color/color_white"
+                android:layout_alignRight="@id/activity_gather_type_hourse_ic"
+                android:layout_margin="-10dp"
+                />
+        </RelativeLayout>
 
-        <LinearLayout
+        <RelativeLayout
             android:id="@+id/activity_gather_type_source"
             android:layout_margin="10dp"
             android:orientation="vertical"
@@ -65,35 +97,101 @@
             android:layout_columnWeight="1"
             android:gravity="center">
             <ImageView
+                android:id="@+id/activity_gather_type_source_ic"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@mipmap/ic_item_source"
+                android:layout_centerHorizontal="true"
                 />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
-                android:text="权属来源"/>
-        </LinearLayout>
+                android:layout_below="@id/activity_gather_type_source_ic"
+                android:text="权属来源"
+                android:layout_centerHorizontal="true"/>
+            <cn.carbs.android.avatarimageview.library.AvatarImageView
+                android:id="@+id/activity_gather_type_source_num"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                app:aiv_BoarderWidth="2dp"
+                app:aiv_ShowBoarder="true"
+                app:aiv_TextSizeRatio="0.6"
+                app:aiv_TextColor="@color/color_white"
+                app:aiv_BoarderColor="@color/color_white"
+                android:layout_alignRight="@id/activity_gather_type_source_ic"
+                android:layout_margin="-10dp"
+                />
+        </RelativeLayout>
 
-        <LinearLayout
+        <RelativeLayout
+            android:id="@+id/activity_gather_type_paper"
+            android:layout_margin="10dp"
+            android:orientation="vertical"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1">
+            <ImageView
+                android:id="@+id/activity_gather_type_paper_ic"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@mipmap/ic_item_other"
+                android:layout_centerHorizontal="true"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_below="@id/activity_gather_type_paper_ic"
+                android:text="图纸"
+                android:layout_centerHorizontal="true"/>
+            <cn.carbs.android.avatarimageview.library.AvatarImageView
+                android:id="@+id/activity_gather_type_paper_num"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                app:aiv_BoarderWidth="2dp"
+                app:aiv_ShowBoarder="true"
+                app:aiv_TextSizeRatio="0.6"
+                app:aiv_TextColor="@color/color_white"
+                app:aiv_BoarderColor="@color/color_white"
+                android:layout_alignRight="@id/activity_gather_type_paper_ic"
+                android:layout_margin="-10dp"
+                />
+        </RelativeLayout>
+
+        <RelativeLayout
             android:id="@+id/activity_gather_type_other"
             android:layout_margin="10dp"
             android:orientation="vertical"
             android:layout_rowWeight="1"
-            android:layout_columnWeight="1"
-            android:gravity="center">
+            android:layout_columnWeight="1">
             <ImageView
+                android:id="@+id/activity_gather_type_other_ic"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@mipmap/ic_item_other"
-                />
+                android:layout_centerHorizontal="true"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
-                android:text="其他"/>
-        </LinearLayout>
+                android:layout_below="@id/activity_gather_type_other_ic"
+                android:text="其他"
+                android:layout_centerHorizontal="true"/>
+            <cn.carbs.android.avatarimageview.library.AvatarImageView
+                android:id="@+id/activity_gather_type_other_num"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                app:aiv_BoarderWidth="2dp"
+                app:aiv_ShowBoarder="true"
+                app:aiv_TextSizeRatio="0.6"
+                app:aiv_TextColor="@color/color_white"
+                app:aiv_BoarderColor="@color/color_white"
+                android:layout_alignRight="@id/activity_gather_type_other_ic"
+                android:layout_margin="-10dp"
+                />
+        </RelativeLayout>
 
         <LinearLayout
             android:id="@+id/activity_gather_type_questionnaire"

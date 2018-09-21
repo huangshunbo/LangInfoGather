@@ -24,7 +24,7 @@
             android:id="@+id/item_obligee_delete"
             android:layout_width="80dp"
             android:layout_height="match_parent"
-            android:background="@color/colorAccent"
+            android:background="@color/color_gray"
             android:gravity="center"
             android:text="删除" />
     </LinearLayout>
@@ -58,22 +58,24 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
                 <TextView
-                    android:id="@+id/item_obligee_name"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    tools:text="张三李四王五赵六刘七王八"
-                    android:lines="1"
-                    android:textColor="@color/color_black"
-                    android:textSize="18dp"
-                    />
-                <TextView
                     android:id="@+id/item_obligee_num"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     tools:text="100086"
                     android:textSize="18dp"
                     android:textColor="@color/color_black"/>
+                <TextView
+                    android:id="@+id/item_obligee_name"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    tools:text="张三李四王五赵六刘七王八"
+                    android:lines="1"
+                    android:layout_marginLeft="10dp"
+                    android:textColor="@color/color_black"
+                    android:textSize="18dp"
+                    />
+
             </LinearLayout>
 
             <TextView

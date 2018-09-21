@@ -3,8 +3,8 @@ package com.android.memefish.langinfogather.ui.main;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 
 import com.android.memefish.langinfogather.R;
 import com.android.memefish.langinfogather.mvp.base.BaseActivity;
@@ -36,8 +36,9 @@ public abstract class MainBaseActivity extends BaseActivity<MainPresenter>{
         initTitleView();
 
         mSmartRecyclerView.setDiver(5, R.drawable.line_left_margin);
-        mSmartRecyclerView.setMode(SmartRecyclerView.STATE_MODE.BOTH);
+        mSmartRecyclerView.setMode(SmartRecyclerView.STATE_MODE.REFRESH);
         onInitList();
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
     }
 
     @Override
@@ -55,17 +56,7 @@ public abstract class MainBaseActivity extends BaseActivity<MainPresenter>{
                 startActivity(new Intent(MainBaseActivity.this,UserCenterActivity.class));
             }
         });
-        mMainTitleView.setSearchListener(new MainTitleView.OnSearchListener() {
-            @Override
-            public void onSearch(String key) {
-                Log.d(TAG,"onSearch key = " + key);
-            }
-        });
-    }
-
-    @Override
-    public void onBackPressed() {
-        //退出应用
 
     }
+
 }

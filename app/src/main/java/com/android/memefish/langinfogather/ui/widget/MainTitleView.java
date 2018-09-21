@@ -8,10 +8,10 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.memefish.langinfogather.R;
@@ -25,12 +25,12 @@ import com.android.memefish.langinfogather.R;
  */
 public class MainTitleView extends FrameLayout implements View.OnClickListener{
 
-
     TextView tvTitle;
     ImageView ivCenter,ivSearch,ivClear;
     EditText mEdittext;
     View llSearchContent;
     OnSearchListener onSearchListener;
+    OnClearListener onClearListener;
 
     public MainTitleView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
@@ -57,6 +57,30 @@ public class MainTitleView extends FrameLayout implements View.OnClickListener{
         });
     }
 
+    public TextView getTvTitle() {
+        return tvTitle;
+    }
+
+    public ImageView getIvCenter() {
+        return ivCenter;
+    }
+
+    public ImageView getIvSearch() {
+        return ivSearch;
+    }
+
+    public ImageView getIvClear() {
+        return ivClear;
+    }
+
+    public EditText getmEdittext() {
+        return mEdittext;
+    }
+
+    public View getLlSearchContent() {
+        return llSearchContent;
+    }
+
     public void setCenterClickListener(OnClickListener listener){
         if(ivCenter != null){
             ivCenter.setOnClickListener(listener);
@@ -65,6 +89,10 @@ public class MainTitleView extends FrameLayout implements View.OnClickListener{
 
     public void setSearchListener(OnSearchListener listener){
         onSearchListener = listener;
+    }
+
+    public void setOnClearListener(OnClearListener onClearListener) {
+        this.onClearListener = onClearListener;
     }
 
     public void setTitle(String title){
@@ -77,19 +105,39 @@ public class MainTitleView extends FrameLayout implements View.OnClickListener{
     public void onClick(View view) {
         int id = view.getId();
         if(id == R.id.view_main_search){
-            ivSearch.setVisibility(GONE);
-            llSearchContent.setVisibility(VISIBLE);
-            tvTitle.setVisibility(GONE);
+            showInput();
         }else if(id == R.id.view_main_search_content_clear){
-            ivSearch.setVisibility(VISIBLE);
-            mEdittext.setText("");
-            llSearchContent.setVisibility(GONE);
-            tvTitle.setVisibility(VISIBLE);
+            reset();
+            if(onClearListener != null){
+                onClearListener.onClear();
+            }
         }
+    }
+
+    public void showInput() {
+        ivSearch.setVisibility(GONE);
+        llSearchContent.setVisibility(VISIBLE);
+        tvTitle.setVisibility(GONE);
+        mEdittext.setFocusable(true);
+        mEdittext.requestFocus();
+        InputMethodManager inputManager = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputManager.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+    }
+
+    public void reset() {
+        ivSearch.setVisibility(VISIBLE);
+        mEdittext.setText("");
+        llSearchContent.setVisibility(GONE);
+        tvTitle.setVisibility(VISIBLE);
     }
 
     public interface OnSearchListener
     {
         void onSearch(String key);
+    }
+
+    public interface OnClearListener
+    {
+        void onClear();
     }
 }

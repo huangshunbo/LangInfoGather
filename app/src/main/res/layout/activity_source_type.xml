@@ -20,99 +20,174 @@
         android:rowCount="3"
         android:background="@color/color_white"
         >
-        <LinearLayout
+        <RelativeLayout
             android:id="@+id/activity_source_type_langcer"
             android:layout_margin="10dp"
-            android:orientation="vertical"
             android:layout_rowWeight="1"
-            android:layout_columnWeight="1"
-            android:gravity="center">
+            android:layout_columnWeight="1">
             <ImageView
+                android:id="@+id/activity_source_type_langcer_icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@mipmap/ic_item_lang_cer"
+                android:layout_centerHorizontal="true"
                 />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
-                android:text="土地证"/>
-        </LinearLayout>
+                android:text="土地证"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/activity_source_type_langcer_icon"/>
+            <cn.carbs.android.avatarimageview.library.AvatarImageView
+                android:id="@+id/activity_source_type_langcer_num"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                app:aiv_BoarderWidth="2dp"
+                app:aiv_ShowBoarder="true"
+                app:aiv_TextSizeRatio="0.6"
+                app:aiv_TextColor="@color/color_white"
+                app:aiv_BoarderColor="@color/color_white"
+                android:layout_alignRight="@id/activity_source_type_langcer_icon"
+                android:layout_margin="-10dp"
+                />
+        </RelativeLayout>
 
-        <LinearLayout
+        <RelativeLayout
             android:id="@+id/activity_source_type_licence"
             android:layout_margin="10dp"
-            android:orientation="vertical"
             android:layout_rowWeight="1"
-            android:layout_columnWeight="1"
-            android:gravity="center">
+            android:layout_columnWeight="1">
             <ImageView
+                android:id="@+id/activity_source_type_licence_icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@mipmap/ic_item_licence"
+                android:layout_centerHorizontal="true"
                 />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
-                android:text="建设许可证"/>
-        </LinearLayout>
+                android:text="建设许可证"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/activity_source_type_licence_icon"/>
+            <cn.carbs.android.avatarimageview.library.AvatarImageView
+                android:id="@+id/activity_source_type_licence_num"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                app:aiv_BoarderWidth="2dp"
+                app:aiv_ShowBoarder="true"
+                app:aiv_TextSizeRatio="0.6"
+                app:aiv_TextColor="@color/color_white"
+                app:aiv_BoarderColor="@color/color_white"
+                android:layout_alignRight="@id/activity_source_type_licence_icon"
+                android:layout_margin="-10dp"
+                />
+        </RelativeLayout>
 
-        <LinearLayout
+        <RelativeLayout
             android:id="@+id/activity_source_type_notification"
             android:layout_margin="10dp"
-            android:orientation="vertical"
             android:layout_rowWeight="1"
-            android:layout_columnWeight="1"
-            android:gravity="center">
+            android:layout_columnWeight="1">
             <ImageView
+                android:id="@+id/activity_source_type_notification_icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@mipmap/ic_item_source"
+                android:layout_centerHorizontal="true"
                 />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
-                android:text="临时用地通知"/>
-        </LinearLayout>
+                android:text="临时用地通知"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/activity_source_type_notification_icon"/>
+            <cn.carbs.android.avatarimageview.library.AvatarImageView
+                android:id="@+id/activity_source_type_notification_num"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                app:aiv_BoarderWidth="2dp"
+                app:aiv_ShowBoarder="true"
+                app:aiv_TextSizeRatio="0.6"
+                app:aiv_TextColor="@color/color_white"
+                app:aiv_BoarderColor="@color/color_white"
+                android:layout_alignRight="@id/activity_source_type_notification_icon"
+                android:layout_margin="-10dp"
+                />
+        </RelativeLayout>
 
-        <LinearLayout
+        <RelativeLayout
             android:id="@+id/activity_source_type_hourse"
             android:layout_margin="10dp"
-            android:orientation="vertical"
             android:layout_rowWeight="1"
-            android:layout_columnWeight="1"
-            android:gravity="center">
+            android:layout_columnWeight="1">
             <ImageView
+                android:id="@+id/activity_source_type_hourse_icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@mipmap/ic_item_house"
+                android:layout_centerHorizontal="true"
                 />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
-                android:text="房产"/>
-        </LinearLayout>
+                android:text="房产"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/activity_source_type_hourse_icon"/>
+            <cn.carbs.android.avatarimageview.library.AvatarImageView
+                android:id="@+id/activity_source_type_hourse_num"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                app:aiv_BoarderWidth="2dp"
+                app:aiv_ShowBoarder="true"
+                app:aiv_TextSizeRatio="0.6"
+                app:aiv_TextColor="@color/color_white"
+                app:aiv_BoarderColor="@color/color_white"
+                android:layout_alignRight="@id/activity_source_type_hourse_icon"
+                android:layout_margin="-10dp"
+                />
+        </RelativeLayout>
 
-        <LinearLayout
+        <RelativeLayout
             android:id="@+id/activity_source_type_other"
             android:layout_margin="10dp"
-            android:orientation="vertical"
             android:layout_rowWeight="1"
-            android:layout_columnWeight="1"
-            android:gravity="center">
+            android:layout_columnWeight="1">
             <ImageView
+                android:id="@+id/activity_source_type_other_icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@mipmap/ic_item_other"
+                android:layout_centerHorizontal="true"
                 />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
-                android:text="其他"/>
-        </LinearLayout>
+                android:text="其他"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/activity_source_type_other_icon"/>
+            <cn.carbs.android.avatarimageview.library.AvatarImageView
+                android:id="@+id/activity_source_type_other_num"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                app:aiv_BoarderWidth="2dp"
+                app:aiv_ShowBoarder="true"
+                app:aiv_TextSizeRatio="0.6"
+                app:aiv_TextColor="@color/color_white"
+                app:aiv_BoarderColor="@color/color_white"
+                android:layout_alignRight="@id/activity_source_type_other_icon"
+                android:layout_margin="-10dp"
+                />
+        </RelativeLayout>
     </GridLayout>
 </LinearLayout>
