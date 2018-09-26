@@ -18,6 +18,9 @@ import com.android.memefish.langinfogather.R;
 import com.android.memefish.langinfogather.bean.DistrictsBean;
 import com.android.memefish.langinfogather.db.Region;
 import com.android.memefish.langinfogather.db.manager.RegionManager;
+import com.android.memefish.langinfogather.http.AbstractCallback;
+import com.android.memefish.langinfogather.http.Smart;
+import com.android.memefish.langinfogather.http.bean.RegionBean;
 import com.android.memefish.langinfogather.mvp.BasePresenter;
 import com.android.memefish.langinfogather.mvp.base.BaseActivity;
 import com.android.memefish.langinfogather.util.ProvinceUtil;
@@ -33,11 +36,6 @@ public class RegionSelectActivity extends BaseActivity implements View.OnClickLi
     EditText etAddr,etAddrDetail,etVillage;
     Toolbar mToolBar;
     TextView tvSubmit;
-
-//    private static ArrayList<String> options1Items = new ArrayList<>();//省
-//    private static ArrayList<ArrayList<String>> options2Items = new ArrayList<>();//市
-//    private static ArrayList<ArrayList<ArrayList<String>>> options3Items = new ArrayList<>();//区
-
     private static ArrayList<DistrictsBean> options = new ArrayList<>();
 
     private static String options1 = "110000";
@@ -48,8 +46,8 @@ public class RegionSelectActivity extends BaseActivity implements View.OnClickLi
 
     private ListPopupWindow mListPopupWindow;
 
-    private Long id = -1L;
-    private Region region;
+    private RegionBean regionBean = null;
+    private boolean isAdd = false;
 
     private static List<DistrictsBean.Area> list;
 
@@ -63,7 +61,7 @@ public class RegionSelectActivity extends BaseActivity implements View.OnClickLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_region_select);
 
-        id = getIntent().getLongExtra("id",-1);
+        regionBean = (RegionBean) getIntent().getSerializableExtra("id");
 
         tvProvince = findViewById(R.id.activity_region_select_province);
         tvCity = findViewById(R.id.activity_region_select_city);
@@ -104,16 +102,17 @@ public class RegionSelectActivity extends BaseActivity implements View.OnClickLi
         mListPopupWindow.setOnItemClickListener(this);
 
 
-        if(id != -1){
-            region = RegionManager.selectRegion(id);
-            tvProvince.setText(region.getProvince());
-            tvCity.setText(region.getCity());
-            tvArea.setText(region.getArea());
-            etAddr.setText(region.getAddr());
-            etAddrDetail.setText(region.getAddrDetail());
-            etVillage.setText(region.getVillage());
+        if(regionBean != null){
+            isAdd = false;
+            tvProvince.setText(regionBean.getProvince());
+            tvCity.setText(regionBean.getCity());
+            tvArea.setText(regionBean.getCounty());
+            etAddr.setText(regionBean.getDJQDM());
+            etAddrDetail.setText(regionBean.getDJZQDM());
+            etVillage.setText(regionBean.getVillageName());
         }else{
-            region = new Region();
+            isAdd = true;
+            regionBean = new RegionBean();
         }
     }
 
@@ -146,16 +145,28 @@ public class RegionSelectActivity extends BaseActivity implements View.OnClickLi
                 Toast.makeText(this, "请填写完整后再提交", Toast.LENGTH_SHORT).show();
                 return;
             }
-            region.setUser(UserUtil.getInstance().getUserId());
-            region.setProvince(findArea("100000",options1).getName().replace("\"", ""));
-            region.setCity(findArea(options1,options2).getName().replace("\"", ""));
-            region.setArea(findArea(options2,options3).getName().replace("\"", ""));
-            region.setCode(findArea(options2,options3).getCode().replace("\"", ""));
-            region.setAddr(addr);
-            region.setAddrDetail(addrDetail);
-            region.setVillage(village);
-            RegionManager.insertRegion(region);
-            this.finish();
+            regionBean.setStaffId(""+UserUtil.getInstance().getLoginBean().getStaffId());
+            regionBean.setProvince(findArea("100000",options1).getName().replace("\"", ""));
+            regionBean.setCity(findArea(options1,options2).getName().replace("\"", ""));
+            regionBean.setCounty(findArea(options2,options3).getName().replace("\"", ""));
+            regionBean.setAreaCode(findArea(options2,options3).getCode().replace("\"", ""));
+            regionBean.setDJQDM(addr);
+            regionBean.setDJZQDM(addrDetail);
+            regionBean.setVillageName(village);
+            Smart.addOrReplaceRegion(isAdd,regionBean,new AbstractCallback<Object>(){
+
+                @Override
+                public void onSuccess(Object o) {
+                    Toast.makeText(RegionSelectActivity.this,"操作成功",Toast.LENGTH_SHORT).show();
+                    RegionSelectActivity.this.finish();
+                }
+
+                @Override
+                public void onFailure(Exception e) {
+                    Toast.makeText(RegionSelectActivity.this,"操作失败",Toast.LENGTH_SHORT).show();
+                }
+            });
+
         }
     }
 

@@ -2,10 +2,19 @@ package com.android.memefish.langinfogather.util;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Environment;
 import android.text.TextUtils;
 
 import com.android.memefish.langinfogather.BaseApplication;
 import com.android.memefish.langinfogather.bean.ObligeeCountBean;
+import com.android.memefish.langinfogather.http.bean.LoginBean;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 
 public class UserUtil {
 
@@ -16,6 +25,10 @@ public class UserUtil {
     private String obligee;//权利人名称
     private Long obligeeChildMainId;//主权利人id
     private ObligeeCountBean tags;//计数
+
+
+    private LoginBean loginBean;
+    private static final String USER_PATH = Environment.getExternalStorageDirectory() + File.separator + "user.info";
 
     private static UserUtil mUserUtil;
     private static SharedPreferences share = BaseApplication.application.getSharedPreferences("User", Context.MODE_PRIVATE);
@@ -122,6 +135,47 @@ public class UserUtil {
         this.obligeeId = obligeeId;
     }
 
+    public LoginBean getLoginBean() {
+        if(loginBean == null){
+            File file = new File(USER_PATH);
+            if(file.exists()){
+                try {
+                    ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));
+                    loginBean= (LoginBean)in.readObject();
+                    in.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return loginBean;
+    }
+
+    public void setLoginBean(LoginBean loginBean) {
+        this.loginBean = loginBean;
+        try {
+            File file = new File(USER_PATH);
+            file.deleteOnExit();
+            file.getParentFile().mkdirs();
+            file.createNewFile();
+            ObjectOutputStream out=new ObjectOutputStream(new FileOutputStream(file));
+            out.writeObject(loginBean);
+            out.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static SharedPreferences getShare() {
+        return share;
+    }
+
+    public static void setShare(SharedPreferences share) {
+        UserUtil.share = share;
+    }
+
     private void loadDataFromSP(){
         userId = share.getString("userId",userId);
         region = share.getLong("region",region);
@@ -136,6 +190,7 @@ public class UserUtil {
         tags.setTuzhi(share.getInt("TUZHI",tags.getTuzhi()));
         tags.setQita(share.getInt("QITA",tags.getQita()));
         tags.setObligee(obligee);
+
     }
 
     public void saveDataToSP(){

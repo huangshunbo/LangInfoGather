@@ -83,7 +83,6 @@ public class ObligeeMainActivity extends MainBaseActivity {
                 childs.put(obligee.getName(), tmp);
             }
             tagMap = PictureManager.listCount();
-            Log.d("hsb","size " + obligees.size() + " taskid " + taskId);
             mSmartRecyclerView.showData(taskId, obligees, obligees.size());
     }
 

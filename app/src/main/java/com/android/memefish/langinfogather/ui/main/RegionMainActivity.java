@@ -9,6 +9,9 @@ import com.android.memefish.langinfogather.R;
 import com.android.memefish.langinfogather.bean.ProvinceBean;
 import com.android.memefish.langinfogather.db.Region;
 import com.android.memefish.langinfogather.db.manager.RegionManager;
+import com.android.memefish.langinfogather.http.AbstractCallback;
+import com.android.memefish.langinfogather.http.Smart;
+import com.android.memefish.langinfogather.http.bean.RegionBean;
 import com.android.memefish.langinfogather.util.UserUtil;
 import com.android.minlib.smartrefreshlayout.recycler.OnSmartFillListener;
 import com.android.minlib.smartrefreshlayout.recycler.ViewHolder;
@@ -32,6 +35,7 @@ public class RegionMainActivity extends MainBaseActivity {
             }
         });
         mMainTitleView.setTitle("行政区");
+        mSmartRecyclerView.loadData();
     }
 
     @Override
@@ -40,24 +44,25 @@ public class RegionMainActivity extends MainBaseActivity {
         mSmartRecyclerView.loadData();
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == REGION_SELECT_CODE && resultCode == RESULT_OK){
-            ProvinceBean bean = (ProvinceBean) data.getSerializableExtra("province");
-        }
-    }
-
-    class MySmartFillListener implements OnSmartFillListener<Region> {
+    class MySmartFillListener implements OnSmartFillListener<RegionBean> {
 
         @Override
         public void onLoadData(final int taskId, int pageIndex) {
-            List<Region> regions = RegionManager.listRegion(UserUtil.getInstance().getUserId());
-            mSmartRecyclerView.showData(taskId,regions,regions.size());
+            Smart.listRegion(""+pageIndex, new AbstractCallback<List<RegionBean>>() {
+                @Override
+                public void onSuccess(List<RegionBean> regionBeans) {
+                    mSmartRecyclerView.showData(taskId,regionBeans,20);
+                }
+
+                @Override
+                public void onFailure(Exception e) {
+                    Toast.makeText(RegionMainActivity.this, "数据获取失败,请刷新重试", Toast.LENGTH_SHORT).show();
+                }
+            });
         }
 
         @Override
-        public void clickItem(int viewId, Region item, int position) {
+        public void clickItem(int viewId, RegionBean item, int position) {
         }
 
         @Override
@@ -66,15 +71,15 @@ public class RegionMainActivity extends MainBaseActivity {
         }
 
         @Override
-        public void createListItem(int viewId, ViewHolder holder, final Region currentItem, List<Region> list, int position) {
-            holder.setText(R.id.item_region_title,currentItem.getAddr() + " " + currentItem.getAddrDetail() + " " + currentItem.getVillage() );
-            holder.setText(R.id.item_region_time,""+currentItem.getProvince() + " " + currentItem.getCity() + " " + currentItem.getArea());
+        public void createListItem(int viewId, ViewHolder holder, final RegionBean currentItem, List<RegionBean> list, int position) {
+            holder.setText(R.id.item_region_title,currentItem.getDJQDM() + " " + currentItem.getDJZQDM() + " " + currentItem.getVillageName() );
+            holder.setText(R.id.item_region_time,""+currentItem.getProvince() + " " + currentItem.getCity() + " " + currentItem.getCounty());
             holder.setOnClickListener(R.id.item_region_edit, new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     // TODO: 2018/7/30 0030 编辑行政区
                     Intent intent = new Intent(RegionMainActivity.this,RegionSelectActivity.class);
-                    intent.putExtra("id",currentItem.getId());
+                    intent.putExtra("id",currentItem);
                     startActivity(intent);
                 }
             });
@@ -82,15 +87,15 @@ public class RegionMainActivity extends MainBaseActivity {
                 @Override
                 public void onClick(View view) {
                     // TODO: 2018/7/30 0030 删除行政区
-                    RegionManager.deleteRegion(currentItem.getId());
+//                    RegionManager.deleteRegion(currentItem.getId());
                     mSmartRecyclerView.loadData();
                 }
             });
             holder.setOnClickListener(R.id.item_region_content, new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    UserUtil.getInstance().setRegion(currentItem.getId());
-                    UserUtil.getInstance().setRegionStr(currentItem.getVillage());
+                    UserUtil.getInstance().setRegion(Long.valueOf(currentItem.getXZQINFOID()));
+                    UserUtil.getInstance().setRegionStr(currentItem.getVillageName());
                     startActivity(new Intent(RegionMainActivity.this,ObligeeMainActivity.class));
                 }
             });
