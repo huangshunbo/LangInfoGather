@@ -51,7 +51,10 @@ public class RegionMainActivity extends MainBaseActivity {
             Smart.listRegion(""+pageIndex, new AbstractCallback<List<RegionBean>>() {
                 @Override
                 public void onSuccess(List<RegionBean> regionBeans) {
-                    mSmartRecyclerView.showData(taskId,regionBeans,20);
+                    mSmartRecyclerView.finishLoadMoreOrRefresh();
+                    if(regionBeans != null && regionBeans.size() > 0){
+                        mSmartRecyclerView.showData(taskId,regionBeans,Integer.MAX_VALUE);
+                    }
                 }
 
                 @Override

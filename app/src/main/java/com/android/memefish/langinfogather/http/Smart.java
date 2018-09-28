@@ -2,12 +2,14 @@ package com.android.memefish.langinfogather.http;
 
 import android.util.Log;
 
+import com.android.memefish.langinfogather.http.bean.ObligeeBean;
 import com.android.memefish.langinfogather.http.bean.RegionBean;
 import com.android.memefish.langinfogather.util.UserUtil;
 import com.google.gson.Gson;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -23,8 +25,9 @@ public class Smart {
     private static final String DOMAIN = "http://api.tianyanchacha.com/";
     private static final String LOGIN = "API/Staff/LoginVerification";
     private static final String LIST_REGION = "API/XZQINFO/FindXZQINFOInfo";
-    private static final String REGION_ADD = "API/ XZQINFO/AddXZQINFO";
+    private static final String REGION_ADD = "API/XZQINFO/AddXZQINFO";
     private static final String REGION_REPLECE = "API/XZQINFO/UpXZQINFO";
+    private static final String LIST_OBLIGEE = "API/QLRM/FindQLRMInfo";
 
     public static void getHtml(String url,Callback callback){
         Request request = new Request.Builder()
@@ -66,6 +69,15 @@ public class Smart {
             params.put("XZQINFOID",regionBean.getXZQINFOID());
             post(REGION_REPLECE,params,callback);
         }
+    }
+
+    public static void listObligee(String pageIndex,Callback callback) {
+        HashMap<String,String> params = new HashMap<>();
+        params.put("Token","");
+        params.put("PageIndex",pageIndex);
+        params.put("PageSize","20");
+        params.put("XZQINFOID",""+UserUtil.getInstance().getRegion());
+        post(LIST_OBLIGEE,params,callback);
     }
 
     private static void post(String url, HashMap<String,String> params,Callback callback){

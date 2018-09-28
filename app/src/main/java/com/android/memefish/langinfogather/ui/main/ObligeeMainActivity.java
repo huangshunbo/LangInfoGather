@@ -17,6 +17,9 @@ import com.android.memefish.langinfogather.db.Picture;
 import com.android.memefish.langinfogather.db.manager.ObligeeManager;
 import com.android.memefish.langinfogather.db.manager.PictureManager;
 import com.android.memefish.langinfogather.db.manager.QuestionNaireManager;
+import com.android.memefish.langinfogather.http.AbstractCallback;
+import com.android.memefish.langinfogather.http.Smart;
+import com.android.memefish.langinfogather.http.bean.ObligeeBean;
 import com.android.memefish.langinfogather.ui.gather.GatherTypeActivity;
 import com.android.memefish.langinfogather.ui.widget.MainTitleView;
 import com.android.memefish.langinfogather.util.PictureUtil;
@@ -33,7 +36,6 @@ import cn.carbs.android.avatarimageview.library.AvatarImageView;
 public class ObligeeMainActivity extends MainBaseActivity {
 
     private HashMap<String, ObligeeCountBean> tagMap;
-    private HashMap<String, String> childs = new HashMap<>();
 
     @Override
     void onInitList() {
@@ -65,29 +67,35 @@ public class ObligeeMainActivity extends MainBaseActivity {
                 mSmartRecyclerView.loadData();
             }
         });
+
+        mSmartRecyclerView.loadData();
     }
 
-    class MySmartFillListener implements OnSmartFillListener<Obligee> {
+    class MySmartFillListener implements OnSmartFillListener<ObligeeBean> {
     @Override
     public void onLoadData(final int taskId, int pageIndex) {
             if (pageIndex == 1) {
                 mMainTitleView.reset();
             }
-            List<Obligee> obligees = ObligeeManager.listObligee(UserUtil.getInstance().getUserId(), UserUtil.getInstance().getRegion());
-            for (Obligee obligee : obligees) {
-                List<ObligeeChild> childList = ObligeeManager.listObligeeChild(obligee.getId());
-                String tmp = "";
-                for (ObligeeChild child : childList) {
-                    tmp += "," + child.getName() + "(" + child.getProperty() + ")";
+//            List<Obligee> obligees = ObligeeManager.listObligee(UserUtil.getInstance().getUserId(), UserUtil.getInstance().getRegion());
+            Smart.listObligee(""+pageIndex, new AbstractCallback<List<ObligeeBean>>() {
+                @Override
+                public void onSuccess(List<ObligeeBean> obligeeBeans) {
+                    mSmartRecyclerView.finishLoadMoreOrRefresh();
+                    if(obligeeBeans != null && obligeeBeans.size() > 0){
+                        mSmartRecyclerView.showData(taskId, obligeeBeans, Integer.MAX_VALUE);
+                    }
                 }
-                childs.put(obligee.getName(), tmp);
-            }
+                @Override
+                public void onFailure(Exception e) {
+                    Toast.makeText(ObligeeMainActivity.this, "数据获取失败,请刷新重试", Toast.LENGTH_SHORT).show();
+                }
+            });
             tagMap = PictureManager.listCount();
-            mSmartRecyclerView.showData(taskId, obligees, obligees.size());
     }
 
     @Override
-    public void clickItem(int viewId, Obligee item, int position) {
+    public void clickItem(int viewId, ObligeeBean item, int position) {
     }
 
     @Override
@@ -96,29 +104,35 @@ public class ObligeeMainActivity extends MainBaseActivity {
     }
 
     @Override
-    public void createListItem(int viewId, ViewHolder holder, final Obligee currentItem, List<Obligee> list, int position) {
+    public void createListItem(int viewId, ViewHolder holder, final ObligeeBean currentItem, List<ObligeeBean> list, int position) {
 
         Log.d("hsb","createListItem size " + list.size());
         AvatarImageView circle = holder.getView(R.id.item_obligee_ic);
         circle.setTextAndColor("张", Color.RED);
-        holder.setText(R.id.item_obligee_name, childs.get(currentItem.getName()));
-        holder.setText(R.id.item_obligee_time, currentItem.getTime());
-        holder.setText(R.id.item_obligee_num, currentItem.getNum() + "  " + currentItem.getHouseNumber());
-
-        ObligeeCountBean countBean = tagMap.get("" + currentItem.getId()) == null ? new ObligeeCountBean() : tagMap.get("" + currentItem.getId());
-
-        String statuStr;
-        if (countBean.getQuanliren() > 0 && countBean.getQita() > 0 && countBean.getQuanshulaiyuan() > 0 && countBean.getFangwu() > 0) {
-            statuStr = "已完成";
-        } else {
-            statuStr = "未完成";
+        String names = currentItem.getQLRMC();
+        if(currentItem.getQlrlist() != null && currentItem.getQlrlist().size() > 0){
+            for(ObligeeBean.Obligee obligee : currentItem.getQlrlist()){
+                names += "; " + obligee.getQLRLXMC();
+            }
         }
-        holder.setText(R.id.item_obligee_status, statuStr);
+        holder.setText(R.id.item_obligee_name, names);
+        holder.setText(R.id.item_obligee_time, currentItem.getAddTime());
+        holder.setText(R.id.item_obligee_num, currentItem.getQLRNumber() + "  " + currentItem.getDoorNumber());
 
-        ((AvatarImageView) holder.getView(R.id.item_obligee_quanliren)).setTextAndColor(countBean.getQuanliren() > 0 ? "" + countBean.getQuanliren() : "权", ContextCompat.getColor(ObligeeMainActivity.this, R.color.color1));
-        ((AvatarImageView) holder.getView(R.id.item_obligee_fangwu)).setTextAndColor(countBean.getFangwu() > 0 ? "" + countBean.getFangwu() : "房", ContextCompat.getColor(ObligeeMainActivity.this, R.color.color2));
-        ((AvatarImageView) holder.getView(R.id.item_obligee_quanshulaiyuan)).setTextAndColor(countBean.getQuanshulaiyuan() > 0 ? "" + countBean.getQuanshulaiyuan() : "源", ContextCompat.getColor(ObligeeMainActivity.this, R.color.color3));
-        ((AvatarImageView) holder.getView(R.id.item_obligee_qita)).setTextAndColor(countBean.getQita() > 0 ? "" + countBean.getQita() : "其", ContextCompat.getColor(ObligeeMainActivity.this, R.color.color4));
+//        ObligeeCountBean countBean = tagMap.get("" + currentItem.getId()) == null ? new ObligeeCountBean() : tagMap.get("" + currentItem.getId());
+//
+//        String statuStr;
+//        if (countBean.getQuanliren() > 0 && countBean.getQita() > 0 && countBean.getQuanshulaiyuan() > 0 && countBean.getFangwu() > 0) {
+//            statuStr = "已完成";
+//        } else {
+//            statuStr = "未完成";
+//        }
+//        holder.setText(R.id.item_obligee_status, statuStr);
+//
+//        ((AvatarImageView) holder.getView(R.id.item_obligee_quanliren)).setTextAndColor(countBean.getQuanliren() > 0 ? "" + countBean.getQuanliren() : "权", ContextCompat.getColor(ObligeeMainActivity.this, R.color.color1));
+//        ((AvatarImageView) holder.getView(R.id.item_obligee_fangwu)).setTextAndColor(countBean.getFangwu() > 0 ? "" + countBean.getFangwu() : "房", ContextCompat.getColor(ObligeeMainActivity.this, R.color.color2));
+//        ((AvatarImageView) holder.getView(R.id.item_obligee_quanshulaiyuan)).setTextAndColor(countBean.getQuanshulaiyuan() > 0 ? "" + countBean.getQuanshulaiyuan() : "源", ContextCompat.getColor(ObligeeMainActivity.this, R.color.color3));
+//        ((AvatarImageView) holder.getView(R.id.item_obligee_qita)).setTextAndColor(countBean.getQita() > 0 ? "" + countBean.getQita() : "其", ContextCompat.getColor(ObligeeMainActivity.this, R.color.color4));
 
         holder.setOnClickListener(R.id.item_obligee_edit, new View.OnClickListener() {
             @Override
@@ -126,10 +140,10 @@ public class ObligeeMainActivity extends MainBaseActivity {
                 // TODO: 2018/7/30 0030 编辑权利人
                 Log.d("hsb", "edit obligee");
                 Toast.makeText(ObligeeMainActivity.this, "功能暂时不开放", Toast.LENGTH_SHORT).show();
-                UserUtil.getInstance().setObligee(currentItem.getName());
-                UserUtil.getInstance().setObligeeId(currentItem.getId());
+                UserUtil.getInstance().setObligee(currentItem.getQLRMC());
+                UserUtil.getInstance().setObligeeId(Long.valueOf(currentItem.getQLRMID()));
                 Intent intent = new Intent(ObligeeMainActivity.this, ObligeeSelectActivity.class);
-                intent.putExtra("obligee", currentItem.getId());
+                intent.putExtra("obligee", currentItem);
                 startActivity(intent);
             }
         });
@@ -137,31 +151,31 @@ public class ObligeeMainActivity extends MainBaseActivity {
             @Override
             public void onClick(View view) {
                 // TODO: 2018/7/30 0030 删除权利人
-                Log.d("hsb", "delete obligee");
-                List<ObligeeChild> childList = ObligeeManager.listObligeeChild(currentItem.getId());
-                for (ObligeeChild child : childList) {
-                    List<Picture> pics = PictureManager.listPictureWithObligee(child.getId());
-                    for (Picture pic : pics) {
-                        PictureManager.deletePicture(pic);
-                    }
-                    ObligeeManager.deleteObligeeChild(child.getId());
-                }
-                PictureUtil.deleteObligeeFile(currentItem);
-                ObligeeManager.deleteObligee(currentItem.getId());
-                mSmartRecyclerView.loadData();
-                fileScan(PictureUtil.NEW_PIC_ROOT_PATH+currentItem.getHouseNumber());
-                QuestionNaireManager.delete(currentItem.getId());
+//                Log.d("hsb", "delete obligee");
+//                List<ObligeeChild> childList = ObligeeManager.listObligeeChild(currentItem.getId());
+//                for (ObligeeChild child : childList) {
+//                    List<Picture> pics = PictureManager.listPictureWithObligee(child.getId());
+//                    for (Picture pic : pics) {
+//                        PictureManager.deletePicture(pic);
+//                    }
+//                    ObligeeManager.deleteObligeeChild(child.getId());
+//                }
+//                PictureUtil.deleteObligeeFile(currentItem);
+//                ObligeeManager.deleteObligee(currentItem.getId());
+//                mSmartRecyclerView.loadData();
+//                fileScan(PictureUtil.NEW_PIC_ROOT_PATH+currentItem.getHouseNumber());
+//                QuestionNaireManager.delete(currentItem.getId());
             }
         });
         holder.setOnClickListener(R.id.item_obligee_content, new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // TODO: 2018/7/31 0031 进入收集首页
-                UserUtil.getInstance().setObligee(currentItem.getName());
-                UserUtil.getInstance().setObligeeId(currentItem.getId());
-                UserUtil.getInstance().setTags(tagMap.get("" + currentItem.getId()));
-                UserUtil.getInstance().setObligeeChildMainId(ObligeeManager.getObligeeChild(currentItem.getId()).getId());
-                startActivity(new Intent(ObligeeMainActivity.this, GatherTypeActivity.class));
+//                UserUtil.getInstance().setObligee(currentItem.getName());
+//                UserUtil.getInstance().setObligeeId(currentItem.getId());
+//                UserUtil.getInstance().setTags(tagMap.get("" + currentItem.getId()));
+//                UserUtil.getInstance().setObligeeChildMainId(ObligeeManager.getObligeeChild(currentItem.getId()).getId());
+//                startActivity(new Intent(ObligeeMainActivity.this, GatherTypeActivity.class));
             }
         });
     }
