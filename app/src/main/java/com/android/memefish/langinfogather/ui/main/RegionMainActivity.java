@@ -90,8 +90,17 @@ public class RegionMainActivity extends MainBaseActivity {
                 @Override
                 public void onClick(View view) {
                     // TODO: 2018/7/30 0030 删除行政区
-//                    RegionManager.deleteRegion(currentItem.getId());
-                    mSmartRecyclerView.loadData();
+                    Smart.deleteRegion(currentItem, new AbstractCallback<Object>() {
+                        @Override
+                        public void onSuccess(Object o) {
+                            Toast.makeText(RegionMainActivity.this,"删除成功",Toast.LENGTH_SHORT).show();
+                            mSmartRecyclerView.loadData();
+                        }
+                        @Override
+                        public void onFailure(Exception e) {
+                            Toast.makeText(RegionMainActivity.this, "删除失败", Toast.LENGTH_SHORT).show();
+                        }
+                    });
                 }
             });
             holder.setOnClickListener(R.id.item_region_content, new View.OnClickListener() {

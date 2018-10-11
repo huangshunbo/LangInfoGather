@@ -68,6 +68,12 @@ public class ObligeeMainActivity extends MainBaseActivity {
             }
         });
 
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         mSmartRecyclerView.loadData();
     }
 
@@ -108,16 +114,18 @@ public class ObligeeMainActivity extends MainBaseActivity {
 
         Log.d("hsb","createListItem size " + list.size());
         AvatarImageView circle = holder.getView(R.id.item_obligee_ic);
-        circle.setTextAndColor("张", Color.RED);
+        if(currentItem.getQLRMC()!=null){
+            circle.setTextAndColor(currentItem.getQLRMC().substring(0,1), Color.RED);
+        }
         String names = currentItem.getQLRMC();
         if(currentItem.getQlrlist() != null && currentItem.getQlrlist().size() > 0){
             for(ObligeeBean.Obligee obligee : currentItem.getQlrlist()){
-                names += "; " + obligee.getQLRLXMC();
+                names += "; " + obligee.getQLRMC() + "(" + obligee.getQLRLXMC() +")";
             }
         }
         holder.setText(R.id.item_obligee_name, names);
         holder.setText(R.id.item_obligee_time, currentItem.getAddTime());
-        holder.setText(R.id.item_obligee_num, currentItem.getQLRNumber() + "  " + currentItem.getDoorNumber());
+        holder.setText(R.id.item_obligee_num, currentItem.getPrenumbering() + "  " + currentItem.getDoorNumber());
 
 //        ObligeeCountBean countBean = tagMap.get("" + currentItem.getId()) == null ? new ObligeeCountBean() : tagMap.get("" + currentItem.getId());
 //
@@ -138,8 +146,6 @@ public class ObligeeMainActivity extends MainBaseActivity {
             @Override
             public void onClick(View view) {
                 // TODO: 2018/7/30 0030 编辑权利人
-                Log.d("hsb", "edit obligee");
-                Toast.makeText(ObligeeMainActivity.this, "功能暂时不开放", Toast.LENGTH_SHORT).show();
                 UserUtil.getInstance().setObligee(currentItem.getQLRMC());
                 UserUtil.getInstance().setObligeeId(Long.valueOf(currentItem.getQLRMID()));
                 Intent intent = new Intent(ObligeeMainActivity.this, ObligeeSelectActivity.class);
@@ -151,6 +157,16 @@ public class ObligeeMainActivity extends MainBaseActivity {
             @Override
             public void onClick(View view) {
                 // TODO: 2018/7/30 0030 删除权利人
+                Smart.deleteObligee(currentItem, new AbstractCallback<Object>() {
+                    @Override
+                    public void onSuccess(Object o) {
+                        Toast.makeText(ObligeeMainActivity.this,"删除成功",Toast.LENGTH_SHORT).show();
+                    }
+                    @Override
+                    public void onFailure(Exception e) {
+                        Toast.makeText(ObligeeMainActivity.this,"删除失败",Toast.LENGTH_SHORT).show();
+                    }
+                });
 //                Log.d("hsb", "delete obligee");
 //                List<ObligeeChild> childList = ObligeeManager.listObligeeChild(currentItem.getId());
 //                for (ObligeeChild child : childList) {

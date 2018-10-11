@@ -1,4 +1,5 @@
 package com.android.memefish.langinfogather.http;
+
 import android.os.Handler;
 import android.os.Looper;
 
@@ -35,25 +36,27 @@ public abstract class AbstractCallback<T> implements Callback {
     @Override
     public void onResponse(Call call, Response response) throws IOException {
         String responseString = response.body().string();
-        final BaseBean bean = gson.fromJson(responseString,BaseBean.class);
-        if(bean.isSuccess()){
+        final BaseBean bean = gson.fromJson(responseString, BaseBean.class);
+        if (bean.isSuccess()) {
             JsonObject jsonObject = new JsonParser().parse(bean.getData()).getAsJsonObject();
 //            Class clz = (Class<T>)(((ParameterizedType)this.getClass().getGenericSuperclass()).getActualTypeArguments()[0]);
-            final T t =  (T) gson.fromJson(jsonObject.get("BizData").getAsString(),(((ParameterizedType)this.getClass().getGenericSuperclass()).getActualTypeArguments()[0]));
-            mainHandler.post(new Runnable() {
-                @Override
-                public void run() {
-                    onSuccess(t);
-                }
-            });
-        }else {
-            mainHandler.post(new Runnable() {
-                @Override
-                public void run() {
-                    onFailure(new IllegalAccessException(bean.getResultCode() + "   " + bean.getResultErrMsg()));
-                }
-            });
+            if (jsonObject.get("BizSuccess").getAsBoolean()) {
+                final T t = (T) gson.fromJson(jsonObject.get("BizData").getAsString(), (((ParameterizedType) this.getClass().getGenericSuperclass()).getActualTypeArguments()[0]));
+                mainHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        onSuccess(t);
+                    }
+                });
+                return;
+            }
         }
+        mainHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                onFailure(new IllegalAccessException(bean.getResultCode() + "   " + bean.getResultErrMsg()));
+            }
+        });
 
     }
 

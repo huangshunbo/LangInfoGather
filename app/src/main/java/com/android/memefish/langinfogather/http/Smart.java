@@ -1,23 +1,16 @@
 package com.android.memefish.langinfogather.http;
 
-import android.util.Log;
-
 import com.android.memefish.langinfogather.http.bean.ObligeeBean;
 import com.android.memefish.langinfogather.http.bean.RegionBean;
 import com.android.memefish.langinfogather.util.UserUtil;
 import com.google.gson.Gson;
 
-import java.io.IOException;
 import java.util.HashMap;
-import java.util.List;
 
-import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
 
 public class Smart {
     private static OkHttpClient client = new OkHttpClient();
@@ -26,8 +19,12 @@ public class Smart {
     private static final String LOGIN = "API/Staff/LoginVerification";
     private static final String LIST_REGION = "API/XZQINFO/FindXZQINFOInfo";
     private static final String REGION_ADD = "API/XZQINFO/AddXZQINFO";
-    private static final String REGION_REPLECE = "API/XZQINFO/UpXZQINFO";
+    private static final String REGION_REPLACE = "API/XZQINFO/UpXZQINFO";
+    private static final String REGION_DELETE = "API/XZQINFO/DelXZQINFO";
     private static final String LIST_OBLIGEE = "API/QLRM/FindQLRMInfo";
+    private static final String OBLIGEE_ADD = "API/QLRM/AddQLRM";
+    private static final String OBLIGEE_REPLACE = "API/QLRM/UpQLRM";
+    private static final String OBLIGEE_DELETE = "API/QLRM/DelQLRM";
 
     public static void getHtml(String url,Callback callback){
         Request request = new Request.Builder()
@@ -67,8 +64,15 @@ public class Smart {
             post(REGION_ADD,params,callback);
         }else{
             params.put("XZQINFOID",regionBean.getXZQINFOID());
-            post(REGION_REPLECE,params,callback);
+            post(REGION_REPLACE,params,callback);
         }
+    }
+
+    public static void deleteRegion(RegionBean regionBean,Callback callback){
+        HashMap<String,String> params = new HashMap<>();
+        params.put("Token","");
+        params.put("XZQINFOID", regionBean.getXZQINFOID());
+        post(REGION_DELETE,params,callback);
     }
 
     public static void listObligee(String pageIndex,Callback callback) {
@@ -78,6 +82,29 @@ public class Smart {
         params.put("PageSize","20");
         params.put("XZQINFOID",""+UserUtil.getInstance().getRegion());
         post(LIST_OBLIGEE,params,callback);
+    }
+
+    public static void addOrReplaceObligee(boolean isAdd,ObligeeBean obligeeBean,Callback callback){
+        HashMap<String,String> params = new HashMap<>();
+        params.put("Token","");
+        params.put("XZQINFOID",""+UserUtil.getInstance().getRegion());
+        params.put("Prenumbering",obligeeBean.getPrenumbering());
+        params.put("DoorNumber",obligeeBean.getDoorNumber());
+        params.put("QRLMC",obligeeBean.getQLRMC());
+        params.put("QLRItemJson",obligeeBean.getQlrlist() == null ? "" : new Gson().toJson(obligeeBean.getQlrlist()));
+        if(isAdd){
+            post(OBLIGEE_ADD,params,callback);
+        }else {
+            params.put("QLRMID",obligeeBean.getQLRMID());
+            post(OBLIGEE_REPLACE,params,callback);
+        }
+    }
+
+    public static void deleteObligee(ObligeeBean obligeeBean,Callback callback){
+        HashMap<String,String> params = new HashMap<>();
+        params.put("Token","");
+        params.put("QLRMID",obligeeBean.getQLRMID());
+        post(OBLIGEE_DELETE,params,callback);
     }
 
     private static void post(String url, HashMap<String,String> params,Callback callback){
